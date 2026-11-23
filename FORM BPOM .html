@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="theme-color" content="#0a1a2e">
+<title>BPOM & Sample Aroma - CV Scentia Ultimacos</title>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;background:#f5f6f8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1a1a1a;font-size:14px;-webkit-text-size-adjust:100%;}
+  .page{max-width:900px;margin:20px auto;background:#fff;padding:0 32px 32px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
+
+  .sync-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;background:#f5f6f8;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;color:#555;margin-bottom:14px;flex-wrap:wrap;transition:all .2s;}
+  .sync-online{background:#e7f5ea;color:#0a5534;border-color:#b6e3c4;}
+  .sync-offline{background:#fff8e1;color:#7a5a00;border-color:#f0d98a;}
+  .sync-error{background:#ffebe9;color:#a40e26;border-color:#f5c2c0;}
+  .sync-loading{background:#e7f0fa;color:#1e40af;border-color:#a9c9e6;}
+  .sync-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;animation:pulse 1.5s infinite;}
+  .sync-online .sync-dot{animation:none;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  .tabs{display:flex;gap:2px;background:#0a1a2e;margin:0 -32px 24px;padding:0 20px;}
+  .tab{flex:1;padding:14px 8px;background:transparent;color:#b8c5d6;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:.3px;transition:all .15s;border-bottom:3px solid transparent;min-height:48px;}
+  .tab:hover{color:#fff;background:rgba(255,255,255,.05);}
+  .tab.active{color:#fff;border-bottom-color:#b8934a;background:rgba(255,255,255,.08);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .kop{display:flex;align-items:center;gap:18px;}
+  .logo{width:82px;height:82px;object-fit:contain;flex-shrink:0;}
+  .kop-info{flex:1;}
+  .kop-nama{font-size:18px;font-weight:700;letter-spacing:.5px;color:#0a1a2e;text-transform:uppercase;}
+  .kop-tagline{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:13px;color:#b8934a;margin-top:2px;}
+  .kop-alamat{font-size:12px;color:#444;margin-top:6px;line-height:1.4;}
+  .kop-kontak{font-size:11.5px;color:#666;margin-top:2px;}
+  .kop-line{border:none;border-top:3px solid #0a1a2e;margin:12px 0 2px;}
+  .kop-line2{border:none;border-top:1px solid #0a1a2e;margin:0 0 20px;}
+
+  h1{font-size:16px;margin:0 0 16px;text-align:center;letter-spacing:.5px;color:#0a1a2e;text-transform:uppercase;}
+  h2{font-size:12.5px;margin:20px 0 8px;padding-bottom:5px;border-bottom:1px solid #d6dce2;color:#0a1a2e;text-transform:uppercase;letter-spacing:.5px;}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+  .row > .field{flex:1;min-width:180px;display:flex;flex-direction:column;gap:3px;}
+  .field.full{flex:1 1 100%;min-width:100%;}
+  label{font-size:12px;font-weight:600;color:#333;}
+  label .req{color:#cf222e;}
+  input,select,textarea{padding:9px 11px;border:1px solid #cfd6de;border-radius:6px;font-size:14px;font-family:inherit;width:100%;background:#fff;transition:border .15s,box-shadow .15s;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#0a1a2e;box-shadow:0 0 0 3px rgba(10,26,46,.12);}
+  textarea{resize:vertical;min-height:60px;}
+
+  table{width:100%;border-collapse:collapse;margin-top:4px;font-size:13px;}
+  th,td{border:1px solid #d6dce2;padding:6px 8px;text-align:left;vertical-align:middle;}
+  th{background:#eef2f6;font-weight:600;font-size:12px;}
+  td input{border:none;padding:4px;width:100%;background:transparent;font-size:13px;border-radius:0;}
+  td input:focus{background:#f0f7ff;outline:none;box-shadow:none;}
+  td.no{width:36px;text-align:center;color:#666;font-weight:600;}
+  td.act{width:44px;text-align:center;}
+
+  .btn{cursor:pointer;border:none;border-radius:6px;font-size:14px;font-weight:600;padding:10px 16px;font-family:inherit;transition:all .12s;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;}
+  .btn-primary{background:#0a1a2e;color:#fff;}
+  .btn-primary:hover{background:#1a2a3e;}
+  .btn-secondary{background:#eaeef2;color:#222;}
+  .btn-secondary:hover{background:#dde3e9;}
+  .btn-danger{background:#cf222e;color:#fff;}
+  .btn-danger:hover{background:#a40e26;}
+  .btn-ghost{background:transparent;color:#cf222e;font-weight:600;padding:3px 6px;cursor:pointer;border:none;font-size:13px;font-family:inherit;}
+  .btn-primary:disabled{opacity:.6;cursor:not-allowed;}
+  .addRow{margin-top:8px;}
+  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap;}
+
+  .ttd-block{margin-top:24px;display:flex;justify-content:flex-end;}
+  .ttd-inner{text-align:center;min-width:260px;}
+  .ttd-inner .tgl{font-size:13px;margin-bottom:14px;}
+  .ttd-inner .judul{font-size:13px;margin-bottom:4px;}
+  .ttd-inner canvas{display:block;width:240px;height:90px;border:1px solid #d6dce2;border-radius:4px;background:#fff;touch-action:none;cursor:crosshair;margin:0 auto;}
+  .ttd-inner .canvas-bar{display:flex;justify-content:center;margin-top:2px;font-size:11px;color:#888;}
+  .ttd-inner .nama{font-weight:600;margin-top:6px;text-decoration:underline;font-size:13px;}
+  .ttd-inner .jabatan{font-size:12px;color:#555;margin-top:1px;}
+
+  .riwayat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+  .riwayat-header h2{margin:0;border:none;padding:0;font-size:14px;}
+  .riwayat-count{font-size:12px;color:#666;background:#eef2f6;padding:3px 10px;border-radius:10px;}
+  .riwayat-toolbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .riwayat-toolbar input[type=text]{flex:1;min-width:160px;}
+  .riwayat-toolbar select{width:auto;min-width:130px;}
+
+  #tblRiwayat{font-size:12.5px;}
+  #tblRiwayat td{padding:8px;}
+  #tblRiwayat tbody tr:hover{background:#fafbfc;}
+  .badge{padding:2px 9px;border-radius:12px;font-size:11px;font-weight:600;display:inline-block;white-space:nowrap;}
+  .badge-ok{background:#dafbe1;color:#0a5534;}
+  .badge-wait{background:#fff8c5;color:#7a5a00;}
+  .badge-jenis{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.2px;white-space:nowrap;}
+  .badge-bpom{background:#dbeafe;color:#1e40af;}
+  .badge-aroma{background:#f3e8ff;color:#6b21a8;}
+  .brand-line{font-size:11.5px;color:#555;margin-top:2px;}
+  .brand-line::before{content:'🏷 ';opacity:.7;}
+  .icon-btn{width:28px;height:28px;border-radius:5px;border:1px solid #d6dce2;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;margin:0 1px;transition:all .12s;padding:0;}
+  .icon-btn:hover{transform:translateY(-1px);}
+  .icon-btn.view{color:#0a5fa5;border-color:#a9c9e6;}
+  .icon-btn.view:hover{background:#e6f0fa;}
+  .icon-btn.ok{color:#1a7f37;border-color:#b6e3c4;}
+  .icon-btn.ok:hover{background:#dafbe1;}
+  .icon-btn.ok[disabled]{opacity:.35;cursor:not-allowed;transform:none;}
+  .icon-btn.edit{color:#9a6700;border-color:#f0d98a;}
+  .icon-btn.edit:hover{background:#fff8c5;}
+  .icon-btn.del{color:#cf222e;border-color:#f5c2c0;}
+  .icon-btn.del:hover{background:#ffebe9;}
+  .empty-row td{text-align:center;color:#888;padding:32px 8px !important;font-style:italic;}
+
+  .master-card{background:#fff;border:1px solid #d6dce2;border-radius:8px;padding:18px 20px;margin-bottom:16px;}
+  .master-card h3{font-size:13.5px;margin:0 0 4px;color:#0a1a2e;text-transform:uppercase;letter-spacing:.4px;}
+  .master-card .hint{font-size:12px;color:#666;margin:0 0 14px;}
+  .master-card.danger{border-color:#f5c2c0;background:#fffbfb;}
+  .master-card.danger h3{color:#cf222e;}
+
+  .logo-preview{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .logo-preview img{width:96px;height:96px;object-fit:contain;border:1px solid #e5e7eb;border-radius:6px;padding:6px;background:#fafbfc;}
+  .logo-preview .actions-stack{display:flex;flex-direction:column;gap:8px;}
+  .logo-preview input[type=file]{display:none;}
+
+  .master-table{font-size:12.5px;margin-bottom:12px;}
+  .master-table td{padding:7px 8px;}
+  .master-table .badge-default{background:#fff3c4;color:#7a5a00;padding:1px 8px;border-radius:10px;font-size:10.5px;font-weight:600;}
+  .master-table tr.is-default{background:#fffbe8;}
+
+  .pic-form{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;padding-top:12px;border-top:1px dashed #d6dce2;}
+  .pic-form .field{display:flex;flex-direction:column;gap:3px;flex:1;min-width:140px;}
+  .pic-form .field.full{flex:1 1 100%;min-width:100%;}
+  .pic-form .field.chk{flex:0 0 auto;min-width:auto;flex-direction:row;align-items:center;gap:6px;padding-bottom:12px;}
+  .pic-form input[type=checkbox]{width:18px;height:18px;}
+
+  .backup-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .backup-actions label.btn{cursor:pointer;}
+  .backup-actions input[type=file]{display:none;}
+
+  /* ===== TOGGLE SWITCH (BARU) ===== */
+  .toggle-switch{position:relative;display:inline-block;width:48px;height:26px;flex-shrink:0;}
+  .toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
+  .toggle-slider{position:absolute;cursor:pointer;inset:0;background:#cfd6de;border-radius:26px;transition:.2s;}
+  .toggle-slider::before{content:'';position:absolute;height:20px;width:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .toggle-switch input:checked + .toggle-slider{background:#0a1a2e;}
+  .toggle-switch input:checked + .toggle-slider::before{transform:translateX(22px);background:#b8934a;}
+  .toggle-switch input:focus-visible + .toggle-slider{outline:2px solid #b8934a;outline-offset:2px;}
+  .toggle-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:6px 0;}
+  .toggle-row label.toggle-label{font-weight:400;font-size:13px;cursor:pointer;color:#1a1a1a;}
+  .toggle-status{margin-left:auto;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap;}
+  .toggle-status.on{background:#dafbe1;color:#0a5534;}
+  .toggle-status.off{background:#ffebe9;color:#a40e26;}
+
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;overflow-y:auto;padding:20px;}
+  .modal.show{display:flex;align-items:flex-start;justify-content:center;}
+  .modal-content{background:#fff;border-radius:8px;padding:24px 28px;max-width:800px;width:100%;margin:auto;box-shadow:0 10px 40px rgba(0,0,0,.2);}
+  .modal-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #eee;gap:8px;flex-wrap:wrap;}
+  .modal-title{font-size:14px;font-weight:700;color:#0a1a2e;}
+
+  .detail-kop{display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+  .detail-kop img{width:64px;height:64px;object-fit:contain;}
+  .detail-kop .kop-nama{font-size:16px;}
+  .detail-kop .kop-alamat{font-size:11px;}
+  .detail-kop .kop-kontak{font-size:10.5px;}
+  .detail-title{text-align:center;font-size:15px;font-weight:700;color:#0a1a2e;letter-spacing:.5px;margin:14px 0 16px;text-transform:uppercase;}
+  .detail-section{margin-bottom:14px;}
+  .detail-section-title{font-size:11px;font-weight:700;color:#0a1a2e;text-transform:uppercase;letter-spacing:.5px;padding-bottom:4px;margin-bottom:8px;border-bottom:1px solid #d6dce2;}
+  .detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 16px;font-size:12.5px;}
+  .detail-grid .full{grid-column:1/-1;}
+  .detail-grid .lbl{color:#666;font-size:11px;display:block;}
+  .detail-grid .val{color:#1a1a1a;font-weight:500;}
+  .detail-varian-table{font-size:12px;width:100%;}
+  .detail-varian-table th{font-size:11px;padding:5px 6px;}
+  .detail-varian-table td{padding:5px 6px;}
+  .detail-ttd{display:flex;justify-content:flex-end;margin-top:16px;}
+  .detail-ttd .box{text-align:center;min-width:200px;}
+  .detail-ttd .tgl{font-size:12px;margin-bottom:8px;}
+  .detail-ttd .judul{font-size:12px;}
+  .detail-ttd .sig{width:180px;height:auto;border:1px solid #d6dce2;border-radius:4px;margin:6px auto;display:block;background:#fff;padding:4px;}
+  .detail-ttd .sig-empty{width:180px;height:70px;border:1px dashed #ccc;border-radius:4px;margin:6px auto;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:11px;background:#fafafa;}
+  .detail-ttd .nama{font-weight:600;text-decoration:underline;font-size:12.5px;margin-top:4px;}
+  .detail-ttd .jabatan{font-size:11.5px;color:#555;}
+  .detail-meta{margin-top:16px;padding-top:12px;border-top:1px dashed #d6dce2;font-size:11px;color:#666;display:flex;flex-wrap:wrap;gap:8px 16px;}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;padding:14px 22px;border-radius:8px;font-size:13px;opacity:0;transition:all .25s;z-index:2000;box-shadow:0 4px 12px rgba(0,0,0,.25);max-width:90vw;text-align:center;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast-success{background:#1a7f37;}
+  .toast-error{background:#cf222e;}
+  .toast-info{background:#0a1a2e;}
+  .mobile-action-bar{display:none;}
+
+  @media (max-width: 640px) {
+    body{font-size:15px;padding-bottom:90px;}
+    .page{margin:0;padding:0 14px 24px;border-radius:0;min-height:100vh;}
+    .tabs{margin:0 -14px 16px;padding:0 2px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+    .tab{padding:14px 2px;font-size:10.5px;min-height:56px;flex-direction:column;gap:2px;line-height:1.2;letter-spacing:0;}
+    .sync-bar{margin:0 0 14px;font-size:11px;padding:6px 10px;}
+    .kop{flex-direction:column;text-align:center;gap:12px;padding-top:8px;}
+    .kop-info{text-align:center;}
+    .logo{width:72px;height:72px;}
+    input,select,textarea{font-size:16px !important;padding:13px 14px;min-height:48px;}
+    textarea{min-height:72px;}
+    label{font-size:13px;font-weight:600;margin-bottom:2px;display:block;}
+    .row{flex-direction:column;gap:12px;margin-bottom:14px;}
+    .row > .field{min-width:100%;}
+    .btn{min-height:48px;padding:13px 20px;font-size:15px;}
+    .icon-btn{width:40px;height:40px;margin:0 2px;}
+    .ttd-block{justify-content:stretch;margin-top:24px;}
+    .ttd-inner{min-width:100%;width:100%;}
+    .ttd-inner canvas{width:100% !important;height:170px !important;}
+    .ttd-inner .canvas-bar{margin-top:6px;}
+    #tblVarian thead, #tblAroma thead{display:none;}
+    #tblVarian, #tblVarian tbody, #tblVarian tr, #tblVarian td,
+    #tblAroma, #tblAroma tbody, #tblAroma tr, #tblAroma td{display:block;width:100%;}
+    #tblVarian tbody tr, #tblAroma tbody tr{border:1px solid #d6dce2;border-radius:10px;padding:14px;margin-bottom:12px;background:#fafbfc;position:relative;}
+    #tblVarian tbody tr td, #tblAroma tbody tr td{border:none;padding:0 0 8px 0;}
+    #tblVarian tbody tr td.no, #tblAroma tbody tr td.no{width:auto;text-align:left;font-size:13px;font-weight:700;color:#0a1a2e;padding-bottom:10px;border-bottom:1px solid #e5e7eb;margin-bottom:10px;}
+    #tblVarian tbody tr td.no::before{content:'Varian #';color:#666;font-weight:500;}
+    #tblAroma tbody tr td.no::before{content:'Aroma #';color:#666;font-weight:500;}
+    #tblVarian tbody tr td[data-label]::before, #tblAroma tbody tr td[data-label]::before{content:attr(data-label);display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:4px;}
+    #tblVarian tbody tr td input, #tblAroma tbody tr td input{border:1px solid #cfd6de;border-radius:6px;padding:12px 14px;font-size:16px;background:#fff;}
+    #tblVarian tbody tr td.act, #tblAroma tbody tr td.act{width:auto;text-align:right;padding-top:10px;border-top:1px dashed #e5e7eb;margin-top:4px;}
+    #tblRiwayat thead{display:none;}
+    #tblRiwayat, #tblRiwayat tbody, #tblRiwayat tr, #tblRiwayat td{display:block;width:100%;}
+    #tblRiwayat tbody tr{border:1px solid #d6dce2;border-radius:10px;padding:12px 14px;margin-bottom:10px;background:#fff;position:relative;}
+    #tblRiwayat tbody tr td{border:none;padding:4px 0;}
+    #tblRiwayat tbody tr td:first-child{position:absolute;right:10px;top:8px;font-size:11px;color:#aaa;font-weight:400;width:auto;}
+    #tblRiwayat tbody tr td:nth-child(2){font-size:12px;color:#666;}
+    #tblRiwayat tbody tr td:nth-child(3){padding:4px 0;}
+    #tblRiwayat tbody tr td:nth-child(4){padding:6px 0;}
+    #tblRiwayat tbody tr td:nth-child(5){font-size:12px;color:#666;display:inline-block;margin-right:8px;}
+    #tblRiwayat tbody tr td:nth-child(6){display:inline-block;padding-left:4px;}
+    #tblRiwayat tbody tr td:last-child{padding-top:10px;border-top:1px dashed #e5e7eb;margin-top:6px;text-align:left;}
+    .riwayat-toolbar{flex-direction:column;gap:8px;}
+    .riwayat-toolbar input, .riwayat-toolbar select, .riwayat-toolbar .btn{width:100%;}
+    .pic-form{flex-direction:column;gap:10px;}
+    .pic-form .field{min-width:100%;}
+    .pic-form .field.chk{padding-bottom:0;}
+    .pic-form .btn{width:100%;}
+    .backup-actions{flex-direction:column;}
+    .backup-actions .btn{width:100%;}
+    .toggle-row{gap:10px;}
+    .toggle-status{margin-left:0;}
+    .mobile-action-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 14px calc(12px + env(safe-area-inset-bottom, 0px));box-shadow:0 -3px 14px rgba(0,0,0,.12);z-index:100;gap:8px;border-top:1px solid #e5e7eb;}
+    .mobile-action-bar .btn{flex:1;min-height:50px;font-size:15px;}
+    .mobile-action-bar .btn-icon-only{flex:0 0 50px;padding:0;}
+    .modal{padding:0;}
+    .modal-content{border-radius:0;min-height:100vh;padding:16px;}
+    .modal-actions{position:sticky;top:0;background:#fff;padding-bottom:12px;z-index:10;border-bottom:1px solid #eee;margin:-16px -16px 12px;padding:12px 16px;}
+    .detail-grid{grid-template-columns:1fr;}
+    .detail-ttd{justify-content:center;}
+    .actions.desktop-only{display:none;}
+  }
+
+  body.pdf-capturing .no-print, body.pdf-capturing .mobile-action-bar, body.pdf-capturing .tabs, body.pdf-capturing .sync-bar{display:none !important;}
+  body.pdf-capturing .page{margin:0 !important;padding:24px !important;box-shadow:none !important;border-radius:0 !important;max-width:800px !important;width:800px !important;}
+  body.pdf-capturing .tab-panel{display:block !important;}
+  body.pdf-capturing .row{flex-direction:row !important;flex-wrap:wrap !important;}
+  body.pdf-capturing .row > .field{min-width:180px !important;flex:1 !important;}
+  body.pdf-capturing .field.full{flex:1 1 100% !important;min-width:100% !important;}
+  body.pdf-capturing .kop{flex-direction:row !important;text-align:left !important;}
+  body.pdf-capturing .kop-info{text-align:left !important;}
+  body.pdf-capturing .ttd-block{justify-content:flex-end !important;}
+  body.pdf-capturing .ttd-inner{min-width:260px !important;width:auto !important;}
+  body.pdf-capturing .ttd-inner canvas{width:240px !important;height:90px !important;}
+  body.pdf-capturing #tblVarian thead, body.pdf-capturing #tblAroma thead{display:table-header-group !important;}
+  body.pdf-capturing #tblVarian tbody, body.pdf-capturing #tblAroma tbody{display:table-row-group !important;}
+  body.pdf-capturing #tblVarian tr, body.pdf-capturing #tblAroma tr{display:table-row !important;}
+  body.pdf-capturing #tblVarian th, body.pdf-capturing #tblVarian td,
+  body.pdf-capturing #tblAroma th, body.pdf-capturing #tblAroma td{display:table-cell !important;padding:6px 8px !important;}
+  body.pdf-capturing #tblVarian td.no, body.pdf-capturing #tblAroma td.no{width:36px !important;text-align:center !important;padding:6px !important;}
+  body.pdf-capturing #tblVarian td.act, body.pdf-capturing #tblAroma td.act{display:none !important;}
+  body.pdf-capturing #tblVarian td[data-label]::before, body.pdf-capturing #tblAroma td[data-label]::before{display:none !important;}
+  body.pdf-capturing #tblVarian td input, body.pdf-capturing #tblAroma td input{border:none !important;padding:4px !important;background:transparent !important;font-size:13px !important;}
+  body.pdf-capturing .btn-ghost{display:none !important;}
+  body.pdf-capturing input, body.pdf-capturing textarea, body.pdf-capturing select{font-size:14px !important;padding:8px 10px !important;min-height:auto !important;box-shadow:none !important;}
+  body.pdf-capturing .icon-btn{display:none !important;}
+
+  /* ===== SEMBUNYIKAN KOP SAAT PDF (BARU) ===== */
+  body.pdf-capturing.no-kop .kop,
+  body.pdf-capturing.no-kop .kop-line,
+  body.pdf-capturing.no-kop .kop-line2,
+  body.pdf-capturing.no-kop .detail-kop,
+  body.pdf-capturing.no-kop #detailBody > hr{display:none !important;}
+
+  @media print{ body{display:none !important;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="tabs no-print">
+    <button type="button" class="tab active" data-tab="form">📝 BPOM</button>
+    <button type="button" class="tab" data-tab="aroma">🧪 Aroma</button>
+    <button type="button" class="tab" data-tab="riwayat">📋 Riwayat</button>
+    <button type="button" class="tab" data-tab="master">⚙️ Master</button>
+  </div>
+
+  <div class="sync-bar no-print sync-loading" id="syncBar">
+    <span class="sync-dot"></span>
+    <span id="syncText">Menghubungkan...</span>
+  </div>
+
+  <!-- ==================== PANEL BPOM ==================== -->
+  <div class="tab-panel active" id="panel-form">
+    <div id="formPrintable">
+      <div class="kop">
+        <img id="logoImg" class="logo" alt="Logo Scentia" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='10' fill='%230a1a2e'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='40' font-weight='600' fill='%23b8934a' text-anchor='middle' letter-spacing='-1'%3ESU%3C/text%3E%3C/svg%3E">
+        <div class="kop-info">
+          <div class="kop-nama">CV Scentia Ultimacos</div>
+          <div class="kop-tagline">Beyond Scent, Beyond Limits</div>
+          <div class="kop-alamat">Grand Harvest, Soho HO No.23, Kebraon, Karangpilang, Surabaya, East Java</div>
+          <div class="kop-kontak">Telp. 085743243378 / 08139231068 &nbsp;•&nbsp; info.scentia@gmail.com &nbsp;•&nbsp; www.scentia.id</div>
+        </div>
+      </div>
+      <hr class="kop-line"><hr class="kop-line2">
+      <h1 id="formTitle">Form Pendaftaran BPOM - Data Varian Produk</h1>
+      <form id="form" novalidate>
+        <h2>A. Data Customer</h2>
+        <div class="row no-print">
+          <div class="field full">
+            <label for="customerSelectBPOM">👤 Pilih dari Database Customer</label>
+            <select id="customerSelectBPOM"><option value="">— Pilih atau isi manual —</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="nama">Nama Customer <span class="req">*</span></label><input id="nama" required autocomplete="name"></div>
+          <div class="field"><label for="perusahaan">Perusahaan / Instansi</label><input id="perusahaan" autocomplete="organization"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="hp">No. HP / WhatsApp</label><input id="hp" type="tel" inputmode="tel"></div>
+          <div class="field"><label for="email">Email <span style="color:#888;font-weight:400;">(opsional)</span></label><input id="email" type="email" inputmode="email"></div>
+          <div class="field"><label for="tanggal">Tanggal</label><input id="tanggal" type="date"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="alamat">Alamat</label><textarea id="alamat" rows="2"></textarea></div>
+        </div>
+
+        <h2>B. Daftar Varian</h2>
+        <table id="tblVarian">
+          <thead><tr><th>No</th><th>Nama Varian</th><th>Warna</th><th>Ukuran</th><th>Jenis</th><th>Keterangan</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="addRow no-print"><button type="button" class="btn btn-secondary" id="addRow">+ Tambah Varian</button></div>
+
+        <h2>C. Brand yang Digunakan</h2>
+        <div class="row">
+          <div class="field full"><label for="brand">Nama Brand <span class="req">*</span></label><input id="brand" placeholder="mis. Scentia Ultimacos, Glowlab, dll." required></div>
+        </div>
+
+        <h2>D. Penanggung Jawab</h2>
+        <div class="row">
+          <div class="field"><label for="picSelect">Pilih dari Master</label><select id="picSelect"></select></div>
+          <div class="field"><label for="picNama">Nama Penanggung Jawab</label><input id="picNama"></div>
+          <div class="field"><label for="picJabatan">Jabatan</label><input id="picJabatan"></div>
+        </div>
+        <div class="ttd-block">
+          <div class="ttd-inner">
+            <div class="tgl">Surabaya, <span id="ttdTanggal"></span></div>
+            <div class="judul">Penanggung Jawab,</div>
+            <div class="canvas-wrap"><canvas id="signature"></canvas></div>
+            <div class="canvas-bar no-print"><button type="button" class="btn btn-ghost" id="clearSig" style="font-size:12px;">↺ Hapus tanda tangan</button></div>
+            <div class="nama" id="ttdNama">(Nama)</div>
+            <div class="jabatan" id="ttdJabatan">Jabatan</div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="actions no-print desktop-only">
+      <button type="button" class="btn btn-secondary" id="btnCancelEdit" style="display:none;">Batal Edit</button>
+      <button type="button" class="btn btn-secondary" id="btnDownloadPDF">⬇ Download PDF</button>
+      <button type="submit" form="form" class="btn btn-primary" id="btnSubmit">💾 Simpan / Kirim Data</button>
+    </div>
+  </div>
+
+  <!-- ==================== PANEL AROMA ==================== -->
+  <div class="tab-panel" id="panel-aroma">
+    <div id="aromaPrintable">
+      <div class="kop">
+        <img class="logo aroma-logo" alt="Logo Scentia" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='10' fill='%230a1a2e'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='40' font-weight='600' fill='%23b8934a' text-anchor='middle' letter-spacing='-1'%3ESU%3C/text%3E%3C/svg%3E">
+        <div class="kop-info">
+          <div class="kop-nama">CV Scentia Ultimacos</div>
+          <div class="kop-tagline">Beyond Scent, Beyond Limits</div>
+          <div class="kop-alamat">Grand Harvest, Soho HO No.23, Kebraon, Karangpilang, Surabaya, East Java</div>
+          <div class="kop-kontak">Telp. 085743243378 / 08139231068 &nbsp;•&nbsp; info.scentia@gmail.com &nbsp;•&nbsp; www.scentia.id</div>
+        </div>
+      </div>
+      <hr class="kop-line"><hr class="kop-line2">
+      <h1 id="aromaFormTitle">Form Sample Aroma</h1>
+      <form id="aromaForm" novalidate>
+        <h2>A. Data Pengiriman</h2>
+        <div class="row no-print">
+          <div class="field full">
+            <label for="customerSelectAroma">👤 Pilih dari Database Customer</label>
+            <select id="customerSelectAroma"><option value="">— Pilih atau isi manual —</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="aromaTanggal">Tanggal</label><input id="aromaTanggal" type="date"></div>
+          <div class="field"><label for="aromaNama">Nama Customer <span class="req">*</span></label><input id="aromaNama" required></div>
+          <div class="field"><label for="aromaPerusahaan">Perusahaan</label><input id="aromaPerusahaan"></div>
+        </div>
+        <div class="row">
+          <div class="field full"><label for="aromaAlamat">Alamat Penerima</label><textarea id="aromaAlamat" rows="2"></textarea></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="aromaWa">No. WA</label><input id="aromaWa" type="tel" inputmode="tel"></div>
+          <div class="field"><label for="aromaLabel">Label</label><input id="aromaLabel" placeholder="mis. Untuk Testing, Sample Gratis"></div>
+        </div>
+
+        <h2>B. Data Pengirim</h2>
+        <div class="row">
+          <div class="field"><label for="aromaPengirimSelect">Pilih dari Master</label><select id="aromaPengirimSelect"></select></div>
+          <div class="field"><label for="aromaPengirimNama">PIC / Pengirim <span class="req">*</span></label><input id="aromaPengirimNama" required></div>
+          <div class="field"><label for="aromaPengirimNomor">Nomor Pengirim</label><input id="aromaPengirimNomor" type="tel" inputmode="tel"></div>
+        </div>
+
+        <h2>C. Daftar Sample Aroma</h2>
+        <table id="tblAroma">
+          <thead><tr><th>No</th><th>Aroma</th><th>Code</th><th>Inspirasi</th><th>ML</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="addRow no-print"><button type="button" class="btn btn-secondary" id="addAromaRow">+ Tambah Aroma</button></div>
+
+        <div class="ttd-block">
+          <div class="ttd-inner">
+            <div class="tgl">Surabaya, <span id="aromaTtdTanggal"></span></div>
+            <div class="judul">PIC / Pengirim,</div>
+            <div class="canvas-wrap"><canvas id="aromaSignature"></canvas></div>
+            <div class="canvas-bar no-print"><button type="button" class="btn btn-ghost" id="aromaClearSig" style="font-size:12px;">↺ Hapus tanda tangan</button></div>
+            <div class="nama" id="aromaTtdNama">(Nama)</div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="actions no-print desktop-only">
+      <button type="button" class="btn btn-secondary" id="btnAromaCancelEdit" style="display:none;">Batal Edit</button>
+      <button type="button" class="btn btn-secondary" id="btnAromaDownloadPDF">⬇ Download PDF</button>
+      <button type="submit" form="aromaForm" class="btn btn-primary" id="btnAromaSubmit">💾 Simpan / Kirim Data</button>
+    </div>
+  </div>
+
+  <!-- ==================== PANEL RIWAYAT ==================== -->
+  <div class="tab-panel" id="panel-riwayat">
+    <div class="riwayat-header">
+      <h2>Riwayat Dokumen</h2>
+      <span class="riwayat-count" id="riwayatCount">0 entri</span>
+    </div>
+    <div class="riwayat-toolbar">
+      <input type="text" id="searchInput" placeholder="🔍 Cari nama, brand, atau perusahaan...">
+      <select id="jenisFilter">
+        <option value="all">Semua Jenis</option>
+        <option value="bpom">📝 BPOM</option>
+        <option value="sample_aroma">🧪 Aroma</option>
+      </select>
+      <select id="statusFilter">
+        <option value="all">Semua Status</option>
+        <option value="pending">⏳ Menunggu</option>
+        <option value="approved">✓ Disetujui</option>
+      </select>
+      <button type="button" class="btn btn-secondary" id="btnExport">⬇ Export CSV</button>
+    </div>
+    <table id="tblRiwayat">
+      <thead><tr><th style="width:36px;">No</th><th style="width:80px;">Tanggal</th><th style="width:90px;">Jenis</th><th>Customer</th><th style="width:90px;text-align:center;">Jumlah</th><th style="width:100px;">Status</th><th style="width:150px;text-align:center;">Aksi</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- ==================== PANEL MASTER ==================== -->
+  <div class="tab-panel" id="panel-master">
+
+    <div class="master-card">
+      <h3>🖼️ Logo Perusahaan</h3>
+      <p class="hint">Otomatis tersinkron ke semua device.</p>
+      <div class="logo-preview">
+        <img id="logoPreview" src="" alt="Logo">
+        <div class="actions-stack">
+          <label class="btn btn-primary">📁 Pilih Logo <input type="file" id="logoInput" accept="image/*"></label>
+          <button type="button" class="btn btn-secondary" id="resetLogo">↺ Reset ke Default</button>
+          <span class="hint" style="font-size:11px;">PNG / JPG / SVG, maks 800 KB.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CARD BARU: TAMPILAN PDF ===== -->
+    <div class="master-card">
+      <h3>📄 Tampilan PDF</h3>
+      <p class="hint">Atur apakah kop perusahaan (logo, nama, alamat, kontak) ikut dicetak di PDF.</p>
+      <div class="toggle-row">
+        <label class="toggle-switch" aria-label="Cantumkan kop di PDF">
+          <input type="checkbox" id="toggleKop" checked>
+          <span class="toggle-slider"></span>
+        </label>
+        <label class="toggle-label" for="toggleKop">Cantumkan kop perusahaan di PDF</label>
+        <span class="toggle-status on" id="kopStatusText">✓ Kop aktif</span>
+      </div>
+    </div>
+
+    <div class="master-card">
+      <h3>👤 Database Customer</h3>
+      <p class="hint">Otomatis tersimpan & tersinkron antar device.</p>
+      <table class="master-table">
+        <thead><tr><th>Nama</th><th>Perusahaan</th><th>HP / WA</th><th style="width:110px;text-align:center;">Aksi</th></tr></thead>
+        <tbody id="custTableBody"></tbody>
+      </table>
+      <div class="pic-form">
+        <div class="field"><label for="custFormNama">Nama <span class="req">*</span></label><input id="custFormNama"></div>
+        <div class="field"><label for="custFormPerusahaan">Perusahaan</label><input id="custFormPerusahaan"></div>
+        <div class="field"><label for="custFormHp">HP / WA</label><input id="custFormHp" type="tel"></div>
+        <div class="field full"><label for="custFormAlamat">Alamat</label><textarea id="custFormAlamat" rows="2"></textarea></div>
+        <div class="field"><label for="custFormEmail">Email</label><input id="custFormEmail" type="email"></div>
+        <button type="button" class="btn btn-primary" id="custFormSave">+ Tambah Customer</button>
+        <button type="button" class="btn btn-secondary" id="custFormCancel" style="display:none;">Batal</button>
+      </div>
+    </div>
+
+    <div class="master-card">
+      <h3>👥 Master PIC (Penanggung Jawab / Pengirim)</h3>
+      <p class="hint">Otomatis tersinkron antar device.</p>
+      <table class="master-table">
+        <thead><tr><th>Nama</th><th>Jabatan</th><th style="width:90px;text-align:center;">Default</th><th style="width:110px;text-align:center;">Aksi</th></tr></thead>
+        <tbody id="picTableBody"></tbody>
+      </table>
+      <div class="pic-form">
+        <div class="field"><label for="picFormNama">Nama PIC</label><input id="picFormNama"></div>
+        <div class="field"><label for="picFormJabatan">Jabatan</label><input id="picFormJabatan"></div>
+        <div class="field chk"><input type="checkbox" id="picFormDefault"><label for="picFormDefault" style="font-weight:400;">Default</label></div>
+        <button type="button" class="btn btn-primary" id="picFormSave">+ Tambah PIC</button>
+        <button type="button" class="btn btn-secondary" id="picFormCancel" style="display:none;">Batal</button>
+      </div>
+    </div>
+
+    <div class="master-card">
+      <h3>💾 Backup / Restore (Lokal)</h3>
+      <p class="hint">Backup manual ke file JSON (untuk jaga-jaga).</p>
+      <div class="backup-actions">
+        <button type="button" class="btn btn-secondary" id="btnBackup">⬇ Backup Lokal (JSON)</button>
+        <label class="btn btn-secondary">⬆ Restore dari JSON <input type="file" id="fileRestore" accept=".json,application/json"></label>
+      </div>
+    </div>
+
+    <div class="master-card danger">
+      <h3>⚠️ Zona Berbahaya</h3>
+      <p class="hint">Tindakan ini tidak bisa dibatalkan. Backup dulu sebelum reset.</p>
+      <div class="backup-actions">
+        <button type="button" class="btn btn-secondary" id="btnResetHistory">🗑 Hapus Semua Riwayat</button>
+        <button type="button" class="btn btn-danger" id="btnResetAll">⚠️ Reset Semua Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-action-bar no-print" id="mobileBar">
+  <button type="button" class="btn btn-secondary btn-icon-only" id="btnMobileCancelEdit" style="display:none;" title="Batal Edit">✕</button>
+  <button type="button" class="btn btn-secondary" id="btnMobilePDF">⬇ PDF</button>
+  <button type="button" class="btn btn-primary" id="btnMobileSubmit">💾 Simpan</button>
+</div>
+
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <div class="modal-actions no-print">
+      <span class="modal-title">Detail Dokumen</span>
+      <div style="display:flex;gap:8px;">
+        <button type="button" class="btn btn-secondary" id="btnCloseModal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="btnDownloadDetailPDF">⬇ PDF</button>
+      </div>
+    </div>
+    <div id="detailBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SUPABASE_URL = 'https://dzfecbdpojcevhdvqxze.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6ZmVjYmRwb2pjZXZoZHZxeHplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5OTUzMDAsImV4cCI6MjEwODU3MTMwMH0.D2EW55rS5z5jfIiCqU4KZnCUP7rtnxT7RPYSeeFboxE';
+
+  const KEY_HISTORY = 'scentia_bpom_history';
+  const KEY_AROMA = 'scentia_aroma_history';
+  const KEY_LOGO = 'scentia_logo';
+  const KEY_PIC = 'scentia_master_pic';
+  const KEY_CUSTOMER = 'scentia_customer_db';
+  const KEY_QUEUE = 'scentia_sync_queue';
+  const KEY_SHOW_KOP = 'scentia_show_kop'; // BARU
+
+  const DEFAULT_LOGO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='10' fill='%230a1a2e'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='40' font-weight='600' fill='%23b8934a' text-anchor='middle' letter-spacing='-1'%3ESU%3C/text%3E%3C/svg%3E";
+  const DEFAULT_PIC = [{ id: 'p_default', nama: 'Nama Lengkap PIC', jabatan: 'Direktur', isDefault: true }];
+
+  let editingId = null, editingAromaId = null, editingPicId = null, editingCustId = null;
+  let currentDetailItem = null, currentTab = 'form';
+  let sb = null, isSyncing = false, lastSyncAt = null;
+
+  const $ = id => document.getElementById(id);
+  const escapeHtml = s => String(s==null?'':s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const uid = (p) => (p||'x_') + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+  /* ============ SUPABASE INIT ============ */
+  try {
+    if (window.supabase && window.supabase.createClient) {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false }
+      });
+    }
+  } catch(e){ console.error('SB init', e); }
+
+  function setSyncState(state, text){
+    const bar = $('syncBar'), label = $('syncText');
+    if (!bar) return;
+    bar.className = 'sync-bar no-print sync-' + state;
+    label.textContent = text || '';
+  }
+
+  /* ============ SHOW KOP TOGGLE (BARU) ============ */
+  function loadShowKop(){
+    const v = localStorage.getItem(KEY_SHOW_KOP);
+    return v === null ? true : v === '1';
+  }
+  function saveShowKop(on){
+    try { localStorage.setItem(KEY_SHOW_KOP, on ? '1' : '0'); } catch(_){}
+  }
+  function applyShowKop(){
+    const on = loadShowKop();
+    const tgl = $('toggleKop'), txt = $('kopStatusText');
+    if (tgl) tgl.checked = on;
+    if (txt){
+      txt.textContent = on ? '✓ Kop aktif' : '✕ Tanpa kop';
+      txt.className = 'toggle-status ' + (on ? 'on' : 'off');
+    }
+  }
+
+  /* ============ SYNC QUEUE ============ */
+  function loadQueue(){ try { return JSON.parse(localStorage.getItem(KEY_QUEUE)) || []; } catch { return []; } }
+  function saveQueue(q){ try { localStorage.setItem(KEY_QUEUE, JSON.stringify(q)); } catch(_){} }
+  function enqueue(op){ const q = loadQueue(); q.push({ ...op, ts: Date.now() }); saveQueue(q); }
+  function dequeueFirst(){ const q = loadQueue(); q.shift(); saveQueue(q); }
+
+  function getLocalCounts(){
+    return {
+      cust: loadCustomerDB().length,
+      pic: loadPIC().length,
+      bpom: loadHistory().length,
+      aroma: loadAromaHistory().length
+    };
+  }
+
+  /* ============ EXECUTE ONE OP ============ */
+  async function execOp(op){
+    if (!sb) throw new Error('Supabase not ready');
+    const t = op.type;
+
+    if (t === 'upsert_customer'){
+      const { error } = await sb.from('customers').upsert({
+        id: op.data.id, nama: op.data.nama, perusahaan: op.data.perusahaan||'',
+        hp: op.data.hp||'', email: op.data.email||'', alamat: op.data.alamat||''
+      });
+      if (error) throw error;
+    } else if (t === 'delete_customer'){
+      const { error } = await sb.from('customers').delete().eq('id', op.id);
+      if (error) throw error;
+    } else if (t === 'replace_pic'){
+      const del = await sb.from('master_pic').delete().neq('id', '___impossible___');
+      if (del.error) throw del.error;
+      const list = loadPIC();
+      if (list.length){
+        const { error } = await sb.from('master_pic').insert(list.map(p => ({
+          id: p.id, nama: p.nama, jabatan: p.jabatan||'', is_default: !!p.isDefault
+        })));
+        if (error) throw error;
+      }
+    } else if (t === 'upsert_logo'){
+      const { error } = await sb.from('app_config').upsert({ key: 'logo', value: op.value });
+      if (error) throw error;
+    } else if (t === 'upsert_show_kop'){ // BARU
+      const { error } = await sb.from('app_config').upsert({ key: 'show_kop', value: op.value });
+      if (error) throw error;
+    } else if (t === 'upsert_bpom'){
+      const { error } = await sb.from('bpom_documents').upsert({
+        id: op.data.id, customer: op.data.customer, varian: op.data.varian,
+        penanggung_jawab: op.data.penanggungJawab, status: op.data.status,
+        approved_at: op.data.approvedAt || null,
+        created_at: op.data.createdAt, updated_at: op.data.updatedAt || op.data.createdAt
+      });
+      if (error) throw error;
+    } else if (t === 'delete_bpom'){
+      const { error } = await sb.from('bpom_documents').delete().eq('id', op.id);
+      if (error) throw error;
+    } else if (t === 'upsert_aroma'){
+      const { error } = await sb.from('aroma_documents').upsert({
+        id: op.data.id, tanggal: op.data.tanggal, customer: op.data.customer,
+        label: op.data.label||'', pengirim: op.data.pengirim, items: op.data.items,
+        penanggung_jawab: op.data.penanggungJawab, status: op.data.status,
+        created_at: op.data.createdAt, updated_at: op.data.updatedAt || op.data.createdAt
+      });
+      if (error) throw error;
+    } else if (t === 'delete_aroma'){
+      const { error } = await sb.from('aroma_documents').delete().eq('id', op.id);
+      if (error) throw error;
+    } else if (t === 'bulk_push'){
+      await bulkPush();
+    }
+  }
+
+  async function bulkPush(){
+    if (!sb) return;
+    const cust = loadCustomerDB();
+    if (cust.length){
+      const { error } = await sb.from('customers').upsert(cust.map(c => ({
+        id: c.id, nama: c.nama, perusahaan: c.perusahaan||'', hp: c.hp||'', email: c.email||'', alamat: c.alamat||''
+      })));
+      if (error) throw error;
+    }
+    const del = await sb.from('master_pic').delete().neq('id', '___impossible___');
+    if (del.error) throw del.error;
+    const pic = loadPIC();
+    if (pic.length){
+      const { error } = await sb.from('master_pic').insert(pic.map(p => ({
+        id: p.id, nama: p.nama, jabatan: p.jabatan||'', is_default: !!p.isDefault
+      })));
+      if (error) throw error;
+    }
+    const bpom = loadHistory();
+    if (bpom.length){
+      const { error } = await sb.from('bpom_documents').upsert(bpom.map(b => ({
+        id: b.id, customer: b.customer, varian: b.varian,
+        penanggung_jawab: b.penanggungJawab, status: b.status,
+        approved_at: b.approvedAt || null, created_at: b.createdAt, updated_at: b.updatedAt || b.createdAt
+      })));
+      if (error) throw error;
+    }
+    const aroma = loadAromaHistory();
+    if (aroma.length){
+      const { error } = await sb.from('aroma_documents').upsert(aroma.map(a => ({
+        id: a.id, tanggal: a.tanggal, customer: a.customer, label: a.label||'',
+        pengirim: a.pengirim, items: a.items, penanggung_jawab: a.penanggungJawab,
+        status: a.status, created_at: a.createdAt, updated_at: a.updatedAt || a.createdAt
+      })));
+      if (error) throw error;
+    }
+    const logo = localStorage.getItem(KEY_LOGO);
+    if (logo){
+      const { error } = await sb.from('app_config').upsert({ key: 'logo', value: logo });
+      if (error) throw error;
+    }
+    // BARU: push show_kop
+    try {
+      const { error } = await sb.from('app_config').upsert({ key: 'show_kop', value: loadShowKop() ? '1' : '0' });
+      if (error) throw error;
+    } catch(e){ console.warn('push show_kop', e); }
+  }
+
+  /* ============ FLUSH QUEUE ============ */
+  async function flushQueue(){
+    if (!sb || isSyncing) return;
+    const q = loadQueue();
+    if (!q.length) return;
+
+    isSyncing = true;
+    setSyncState('loading', 'Menyinkronkan ' + q.length + ' perubahan...');
+    let successCount = 0;
+
+    try {
+      while (loadQueue().length > 0){
+        const op = loadQueue()[0];
+        try {
+          await execOp(op);
+          dequeueFirst();
+          successCount++;
+        } catch(e){
+          console.error('Sync op failed', op.type, e);
+          throw e;
+        }
+      }
+      lastSyncAt = new Date();
+      setSyncState('online', '✓ Tersinkron • ' + formatTime(lastSyncAt));
+    } catch(e){
+      setSyncState('offline', '⚠ Offline — ' + loadQueue().length + ' menunggu • auto-retry');
+    } finally {
+      isSyncing = false;
+    }
+  }
+
+  function formatTime(d){
+    return d.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function queueSync(op){
+    enqueue(op);
+    setTimeout(() => flushQueue(), 100);
+    setSyncState('loading', 'Menyinkronkan...');
+  }
+
+  /* ============ PULL FROM SUPABASE ============ */
+  async function initialPull(){
+    if (!sb){
+      setSyncState('offline', '⚠ Supabase tidak termuat — mode lokal');
+      return;
+    }
+    setSyncState('loading', 'Menghubungkan ke Supabase...');
+
+    try {
+      const [cust, pics, bpom, aroma, cfg] = await Promise.all([
+        sb.from('customers').select('*'),
+        sb.from('master_pic').select('*'),
+        sb.from('bpom_documents').select('*'),
+        sb.from('aroma_documents').select('*'),
+        sb.from('app_config').select('*')
+      ]);
+
+      if (cust.error) throw new Error('customers: ' + cust.error.message);
+      if (pics.error) throw new Error('master_pic: ' + pics.error.message);
+      if (bpom.error) throw new Error('bpom_documents: ' + bpom.error.message);
+      if (aroma.error) throw new Error('aroma_documents: ' + aroma.error.message);
+      if (cfg.error) throw new Error('app_config: ' + cfg.error.message);
+
+      const remoteEmpty = !(cust.data||[]).length && !(pics.data||[]).length && !(bpom.data||[]).length && !(aroma.data||[]).length;
+      const localCounts = getLocalCounts();
+      const localHasData = localCounts.cust > 0 || localCounts.bpom > 0 || localCounts.aroma > 0;
+
+      if (remoteEmpty && localHasData){
+        setSyncState('loading', 'Migrasi data lokal ke Supabase...');
+        try {
+          await bulkPush();
+          setSyncState('online', '✓ Data lokal di-upload ke Supabase • ' + formatTime(new Date()));
+          lastSyncAt = new Date();
+          return;
+        } catch(e){
+          console.error('Bulk push fail', e);
+          setSyncState('error', 'Migrasi gagal: ' + (e.message||'').slice(0,50));
+          return;
+        }
+      }
+
+      const custList = (cust.data || []).map(c => ({
+        id: c.id, nama: c.nama, perusahaan: c.perusahaan||'', hp: c.hp||'', email: c.email||'', alamat: c.alamat||''
+      }));
+      localStorage.setItem(KEY_CUSTOMER, JSON.stringify(custList));
+
+      const picList = (pics.data || []).map(p => ({
+        id: p.id, nama: p.nama, jabatan: p.jabatan||'', isDefault: !!p.is_default
+      }));
+      if (picList.length) localStorage.setItem(KEY_PIC, JSON.stringify(picList));
+
+      const bpomList = (bpom.data || []).map(b => ({
+        id: b.id, customer: b.customer||{}, varian: b.varian||[],
+        penanggungJawab: b.penanggung_jawab||{}, status: b.status||'pending',
+        approvedAt: b.approved_at, createdAt: b.created_at, updatedAt: b.updated_at
+      }));
+      localStorage.setItem(KEY_HISTORY, JSON.stringify(bpomList));
+
+      const aromaList = (aroma.data || []).map(a => ({
+        id: a.id, tanggal: a.tanggal, customer: a.customer||{}, label: a.label||'',
+        pengirim: a.pengirim||{}, items: a.items||[], penanggungJawab: a.penanggung_jawab||{},
+        status: a.status||'pending', createdAt: a.created_at, updatedAt: a.updated_at
+      }));
+      localStorage.setItem(KEY_AROMA, JSON.stringify(aromaList));
+
+      const logoRow = (cfg.data || []).find(r => r.key === 'logo');
+      if (logoRow?.value) localStorage.setItem(KEY_LOGO, logoRow.value);
+
+      // BARU: baca show_kop dari remote
+      const kopRow = (cfg.data || []).find(r => r.key === 'show_kop');
+      if (kopRow && kopRow.value !== undefined && kopRow.value !== null){
+        saveShowKop(kopRow.value === '1' || kopRow.value === true);
+      }
+
+      lastSyncAt = new Date();
+      setSyncState('online', '✓ Tersinkron • ' + custList.length + ' customer • ' + bpomList.length + ' BPOM • ' + aromaList.length + ' aroma');
+
+      if (loadQueue().length) flushQueue();
+    } catch(e){
+      console.error('Initial pull fail', e);
+      setSyncState('error', '⚠ Gagal koneksi: ' + (e.message||'').slice(0, 60));
+    }
+  }
+
+  /* ============ TOAST ============ */
+  function toast(msg, type='info', dur=2800){
+    const el = document.createElement('div');
+    el.className = 'toast toast-' + type;
+    el.textContent = msg;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('show'));
+    setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, dur);
+  }
+
+  /* ============ TABS ============ */
+  function switchTab(name){
+    currentTab = name;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+    $('mobileBar').style.display = (name === 'form' || name === 'aroma') ? '' : 'none';
+    if (name === 'riwayat') renderHistory();
+    if (name === 'master'){ renderPICTable(); renderCustomerTable(); applyShowKop(); }
+    if (name === 'form') setTimeout(() => resizeCanvas(), 50);
+    if (name === 'aroma') setTimeout(() => resizeAromaCanvas(), 50);
+    updateMobileCancelBtn();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
+  function updateMobileCancelBtn(){
+    const show = (currentTab === 'form' && editingId) || (currentTab === 'aroma' && editingAromaId);
+    $('btnMobileCancelEdit').style.display = show ? 'inline-flex' : 'none';
+  }
+
+  /* ============ LOGO ============ */
+  const logoImg = $('logoImg'), logoPreview = $('logoPreview');
+  const aromaLogos = document.querySelectorAll('.aroma-logo');
+  function applyLogo(src){ logoImg.src = src; logoPreview.src = src; aromaLogos.forEach(l => l.src = src); }
+  function loadLogo(){ const s = localStorage.getItem(KEY_LOGO); applyLogo(s || DEFAULT_LOGO); }
+  function saveLogo(src){ try{ localStorage.setItem(KEY_LOGO, src);}catch(_){toast('Logo terlalu besar.','error');} }
+
+  $('logoInput').addEventListener('change', e => {
+    const file = e.target.files[0]; if (!file) return;
+    if (file.size > 800*1024){ toast('Logo terlalu besar (maks 800 KB).','error'); e.target.value=''; return; }
+    const r = new FileReader();
+    r.onload = ev => {
+      saveLogo(ev.target.result); applyLogo(ev.target.result);
+      queueSync({ type: 'upsert_logo', value: ev.target.result });
+      toast('Logo diperbarui.','success');
+    };
+    r.readAsDataURL(file); e.target.value='';
+  });
+  $('resetLogo').addEventListener('click', () => {
+    if (!confirm('Reset logo ke default?')) return;
+    localStorage.removeItem(KEY_LOGO); applyLogo(DEFAULT_LOGO);
+    queueSync({ type: 'upsert_logo', value: DEFAULT_LOGO });
+    toast('Logo direset.','info');
+  });
+
+  /* ============ TOGGLE KOP LISTENER (BARU) ============ */
+  $('toggleKop').addEventListener('change', e => {
+    const on = e.target.checked;
+    saveShowKop(on);
+    applyShowKop();
+    queueSync({ type: 'upsert_show_kop', value: on ? '1' : '0' });
+    toast(on ? 'Kop akan dicetak di PDF.' : 'PDF tanpa kop.', 'success');
+  });
+
+  /* ============ MASTER PIC ============ */
+  function loadPIC(){
+    try { const raw = localStorage.getItem(KEY_PIC); if (raw){ const a = JSON.parse(raw); if (Array.isArray(a) && a.length) return a; } } catch(_){}
+    return DEFAULT_PIC.map(x => ({...x}));
+  }
+  function savePIC(list){ localStorage.setItem(KEY_PIC, JSON.stringify(list)); queueSync({ type: 'replace_pic' }); }
+
+  function renderPICTable(){
+    const list = loadPIC(), tbody = $('picTableBody');
+    if (!list.length){ tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Belum ada PIC.</td></tr>'; return; }
+    tbody.innerHTML = list.map(p => `
+      <tr class="${p.isDefault?'is-default':''}">
+        <td style="font-weight:600;">${escapeHtml(p.nama)}</td>
+        <td>${escapeHtml(p.jabatan||'-')}</td>
+        <td style="text-align:center;">${p.isDefault?'<span class="badge-default">★ Default</span>':'<button class="icon-btn edit" data-pic-act="default" data-id="'+p.id+'">☆</button>'}</td>
+        <td style="text-align:center;white-space:nowrap;">
+          <button class="icon-btn edit" data-pic-act="edit" data-id="${p.id}">✎</button>
+          <button class="icon-btn del" data-pic-act="delete" data-id="${p.id}">🗑</button>
+        </td>
+      </tr>`).join('');
+  }
+  $('picTableBody').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-pic-act]'); if (!btn) return;
+    const id = btn.dataset.id, act = btn.dataset.picAct;
+    const list = loadPIC(), idx = list.findIndex(p => p.id === id);
+    if (idx < 0) return;
+    const p = list[idx];
+    if (act === 'default'){ list.forEach(x => x.isDefault = false); p.isDefault = true; savePIC(list); renderPICTable(); populatePICDropdowns(); toast('"'+p.nama+'" default.','success'); }
+    else if (act === 'edit'){ editingPicId = id; $('picFormNama').value = p.nama; $('picFormJabatan').value = p.jabatan||''; $('picFormDefault').checked = !!p.isDefault; $('picFormSave').textContent = '💾 Update'; $('picFormCancel').style.display='inline-flex'; $('picFormNama').focus(); }
+    else if (act === 'delete'){
+      if (!confirm('Hapus PIC "'+p.nama+'"?')) return;
+      const wasD = p.isDefault; list.splice(idx,1);
+      if (wasD && list.length) list[0].isDefault = true;
+      savePIC(list); renderPICTable(); populatePICDropdowns(); toast('PIC dihapus.','info');
+    }
+  });
+  $('picFormSave').addEventListener('click', () => {
+    const nama = $('picFormNama').value.trim(), jabatan = $('picFormJabatan').value.trim(), isD = $('picFormDefault').checked;
+    if (!nama){ toast('Nama PIC wajib.','error'); $('picFormNama').focus(); return; }
+    const list = loadPIC();
+    if (editingPicId){
+      const idx = list.findIndex(p => p.id === editingPicId);
+      if (idx >= 0){ list[idx].nama = nama; list[idx].jabatan = jabatan;
+        if (isD){ list.forEach(x => x.isDefault = false); list[idx].isDefault = true; }
+        else if (list[idx].isDefault){ list[idx].isDefault = false; }
+      }
+      savePIC(list); renderPICTable(); populatePICDropdowns(); cancelPICEdit(); toast('PIC diperbarui.','success');
+    } else {
+      const np = { id: uid('p_'), nama, jabatan, isDefault: false };
+      if (isD){ list.forEach(x => x.isDefault = false); np.isDefault = true; }
+      else if (!list.length) np.isDefault = true;
+      list.push(np); savePIC(list); renderPICTable(); populatePICDropdowns(); cancelPICEdit(); toast('PIC ditambahkan.','success');
+    }
+  });
+  function cancelPICEdit(){ editingPicId = null; ['picFormNama','picFormJabatan'].forEach(id => $(id).value=''); $('picFormDefault').checked=false; $('picFormSave').textContent='+ Tambah PIC'; $('picFormCancel').style.display='none'; }
+  $('picFormCancel').addEventListener('click', cancelPICEdit);
+
+  /* ============ DATABASE CUSTOMER ============ */
+  function loadCustomerDB(){ try { const r = localStorage.getItem(KEY_CUSTOMER); if (r){ const a = JSON.parse(r); if (Array.isArray(a)) return a; } } catch(_){} return []; }
+  function saveCustomerDB(list){ localStorage.setItem(KEY_CUSTOMER, JSON.stringify(list)); }
+
+  function renderCustomerTable(){
+    const list = loadCustomerDB(), tbody = $('custTableBody');
+    if (!list.length){ tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Belum ada customer.</td></tr>'; return; }
+    tbody.innerHTML = list.slice().sort((a,b) => (a.nama||'').localeCompare(b.nama||'')).map(c => `
+      <tr>
+        <td style="font-weight:600;">${escapeHtml(c.nama)}</td>
+        <td>${escapeHtml(c.perusahaan||'-')}</td>
+        <td>${escapeHtml(c.hp||'-')}</td>
+        <td style="text-align:center;white-space:nowrap;">
+          <button class="icon-btn edit" data-cust-act="edit" data-id="${c.id}">✎</button>
+          <button class="icon-btn del" data-cust-act="delete" data-id="${c.id}">🗑</button>
+        </td>
+      </tr>`).join('');
+  }
+  $('custTableBody').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-cust-act]'); if (!btn) return;
+    const id = btn.dataset.id, act = btn.dataset.custAct;
+    const list = loadCustomerDB(), idx = list.findIndex(c => c.id === id);
+    if (idx < 0) return;
+    const c = list[idx];
+    if (act === 'edit'){
+      editingCustId = id;
+      $('custFormNama').value = c.nama||''; $('custFormPerusahaan').value = c.perusahaan||'';
+      $('custFormHp').value = c.hp||''; $('custFormAlamat').value = c.alamat||''; $('custFormEmail').value = c.email||'';
+      $('custFormSave').textContent = '💾 Update'; $('custFormCancel').style.display = 'inline-flex'; $('custFormNama').focus();
+    } else if (act === 'delete'){
+      if (!confirm('Hapus customer "'+c.nama+'"?')) return;
+      list.splice(idx,1); saveCustomerDB(list); renderCustomerTable(); populateCustomerDropdowns();
+      queueSync({ type: 'delete_customer', id });
+      toast('Customer dihapus.','info');
+    }
+  });
+  $('custFormSave').addEventListener('click', () => {
+    const nama = $('custFormNama').value.trim();
+    if (!nama){ toast('Nama wajib.','error'); $('custFormNama').focus(); return; }
+    const data = { nama, perusahaan: $('custFormPerusahaan').value.trim(), hp: $('custFormHp').value.trim(), alamat: $('custFormAlamat').value.trim(), email: $('custFormEmail').value.trim() };
+    const list = loadCustomerDB();
+    if (editingCustId){
+      const idx = list.findIndex(c => c.id === editingCustId);
+      if (idx >= 0) list[idx] = { ...list[idx], ...data };
+      saveCustomerDB(list); renderCustomerTable(); populateCustomerDropdowns(); cancelCustEdit();
+      queueSync({ type: 'upsert_customer', data: list[idx] });
+      toast('Customer diperbarui.','success');
+    } else {
+      if (list.find(c => (c.nama||'').toLowerCase() === nama.toLowerCase())){ toast('Nama sudah ada.','error'); return; }
+      const nc = { id: uid('c_'), ...data };
+      list.push(nc); saveCustomerDB(list); renderCustomerTable(); populateCustomerDropdowns(); cancelCustEdit();
+      queueSync({ type: 'upsert_customer', data: nc });
+      toast('Customer ditambahkan.','success');
+    }
+  });
+  function cancelCustEdit(){ editingCustId = null; ['custFormNama','custFormPerusahaan','custFormHp','custFormAlamat','custFormEmail'].forEach(id => $(id).value=''); $('custFormSave').textContent='+ Tambah Customer'; $('custFormCancel').style.display='none'; }
+  $('custFormCancel').addEventListener('click', cancelCustEdit);
+
+  function populateCustomerDropdowns(){
+    const list = loadCustomerDB().slice().sort((a,b) => (a.nama||'').localeCompare(b.nama||''));
+    ['customerSelectBPOM','customerSelectAroma'].forEach(id => {
+      const sel = $(id); if (!sel) return;
+      const v = sel.value;
+      sel.innerHTML = '<option value="">— Pilih atau isi manual —</option>';
+      list.forEach(c => { const o = document.createElement('option'); o.value = c.id; o.textContent = c.nama + (c.perusahaan ? ' — ' + c.perusahaan : ''); sel.appendChild(o); });
+      if (v && list.find(c => c.id === v)) sel.value = v;
+    });
+  }
+  $('customerSelectBPOM').addEventListener('change', () => {
+    const id = $('customerSelectBPOM').value; if (!id) return;
+    const c = loadCustomerDB().find(x => x.id === id); if (!c) return;
+    $('nama').value = c.nama||''; $('perusahaan').value = c.perusahaan||'';
+    $('hp').value = c.hp||''; $('email').value = c.email||''; $('alamat').value = c.alamat||'';
+    toast('Customer terisi.','success');
+  });
+  $('customerSelectAroma').addEventListener('change', () => {
+    const id = $('customerSelectAroma').value; if (!id) return;
+    const c = loadCustomerDB().find(x => x.id === id); if (!c) return;
+    $('aromaNama').value = c.nama||''; $('aromaPerusahaan').value = c.perusahaan||'';
+    $('aromaWa').value = c.hp||''; $('aromaAlamat').value = c.alamat||'';
+    toast('Customer terisi.','success');
+  });
+
+  function upsertCustomer(payload){
+    const nama = (payload.nama||'').trim(); if (!nama) return;
+    const list = loadCustomerDB();
+    const idx = list.findIndex(c => (c.nama||'').toLowerCase() === nama.toLowerCase());
+    let updated;
+    if (idx >= 0){
+      ['perusahaan','hp','alamat','email'].forEach(k => { if (payload[k]) list[idx][k] = payload[k]; });
+      updated = list[idx];
+    } else {
+      updated = { id: uid('c_'), nama, perusahaan: payload.perusahaan||'', hp: payload.hp||'', alamat: payload.alamat||'', email: payload.email||'' };
+      list.push(updated);
+    }
+    saveCustomerDB(list); populateCustomerDropdowns(); renderCustomerTable();
+    queueSync({ type: 'upsert_customer', data: updated });
+  }
+
+  /* ============ PIC DROPDOWNS ============ */
+  const picSelect = $('picSelect'), picNama = $('picNama'), picJabatan = $('picJabatan');
+  function populatePICDropdowns(){
+    const list = loadPIC();
+    ['picSelect','aromaPengirimSelect'].forEach(selId => {
+      const sel = $(selId); if (!sel) return;
+      sel.innerHTML = '<option value="">— Manual —</option>';
+      list.forEach(p => { const o = document.createElement('option'); o.value = p.id; o.textContent = p.nama + (p.jabatan ? ' — ' + p.jabatan : '') + (p.isDefault ? ' ★' : ''); sel.appendChild(o); });
+      const d = list.find(p => p.isDefault); if (d) sel.value = d.id;
+    });
+    const d = list.find(p => p.isDefault);
+    if (d){ picNama.value = d.nama; picJabatan.value = d.jabatan||''; aromaPengirimNama.value = d.nama; }
+    syncTtdPIC(); syncAromaTtdPIC();
+  }
+  picSelect.addEventListener('change', () => {
+    if (!picSelect.value) return;
+    const p = loadPIC().find(x => x.id === picSelect.value);
+    if (p){ picNama.value = p.nama; picJabatan.value = p.jabatan||''; syncTtdPIC(); }
+  });
+
+  /* ============ VARIAN ============ */
+  const tbody = document.querySelector('#tblVarian tbody');
+  const renumber = () => [...tbody.rows].forEach((tr,i) => { tr.querySelector('td.no').textContent = i+1; });
+  function addRow(data = {}){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="no"></td>
+      <td data-label="Nama Varian"><input data-k="nama" value="${escapeHtml(data.nama||'')}" placeholder="mis. Serum Vitamin C"></td>
+      <td data-label="Warna"><input data-k="warna" value="${escapeHtml(data.warna||'')}"></td>
+      <td data-label="Ukuran"><input data-k="ukuran" value="${escapeHtml(data.ukuran||'')}" placeholder="mis. 30 mL"></td>
+      <td data-label="Jenis"><input data-k="jenis" value="${escapeHtml(data.jenis||'')}"></td>
+      <td data-label="Keterangan"><input data-k="keterangan" value="${escapeHtml(data.keterangan||'')}"></td>
+      <td class="act no-print"><button type="button" class="btn-ghost">✕</button></td>`;
+    tr.querySelector('button').addEventListener('click', () => { if (tbody.rows.length <= 1){ toast('Minimal 1.','error'); return; } tr.remove(); renumber(); });
+    tbody.appendChild(tr); renumber();
+  }
+  $('addRow').addEventListener('click', () => addRow());
+  function readVarian(){
+    return [...tbody.rows].map((tr,i) => { const o = { no: i+1 }; tr.querySelectorAll('input[data-k]').forEach(inp => o[inp.dataset.k] = inp.value.trim()); return o; }).filter(v => v.nama || v.warna || v.ukuran || v.jenis || v.keterangan);
+  }
+
+  /* ============ AROMA ============ */
+  const aromaTbody = document.querySelector('#tblAroma tbody');
+  const renumberAroma = () => [...aromaTbody.rows].forEach((tr,i) => { tr.querySelector('td.no').textContent = i+1; });
+  function addAromaRow(data = {}){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="no"></td>
+      <td data-label="Aroma"><input data-k="aroma" value="${escapeHtml(data.aroma||'')}" placeholder="mis. Vanilla Musk"></td>
+      <td data-label="Code"><input data-k="code" value="${escapeHtml(data.code||'')}"></td>
+      <td data-label="Inspirasi"><input data-k="inspirasi" value="${escapeHtml(data.inspirasi||'')}"></td>
+      <td data-label="ML"><input data-k="ml" value="${escapeHtml(data.ml||'')}" inputmode="numeric"></td>
+      <td class="act no-print"><button type="button" class="btn-ghost">✕</button></td>`;
+    tr.querySelector('button').addEventListener('click', () => { if (aromaTbody.rows.length <= 1){ toast('Minimal 1.','error'); return; } tr.remove(); renumberAroma(); });
+    aromaTbody.appendChild(tr); renumberAroma();
+  }
+  $('addAromaRow').addEventListener('click', () => addAromaRow());
+  function readAromaItems(){
+    return [...aromaTbody.rows].map((tr,i) => { const o = { no: i+1 }; tr.querySelectorAll('input[data-k]').forEach(inp => o[inp.dataset.k] = inp.value.trim()); return o; }).filter(v => v.aroma || v.code || v.inspirasi || v.ml);
+  }
+
+  /* ============ TANGGAL ============ */
+  const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  function formatTanggalPanjang(iso){ if(!iso) return ''; const d = new Date(iso); return `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`; }
+  function formatTanggalPendek(iso){ if(!iso) return '-'; const d = new Date(iso); return d.toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'}); }
+
+  const ttdNama = $('ttdNama'), ttdJabatan = $('ttdJabatan'), ttdTanggal = $('ttdTanggal');
+  function syncTtdPIC(){ ttdNama.textContent = picNama.value.trim() || '(Nama)'; ttdJabatan.textContent = picJabatan.value.trim() || 'Jabatan'; }
+  picNama.addEventListener('input', syncTtdPIC); picJabatan.addEventListener('input', syncTtdPIC);
+  function syncTtdTanggal(){ ttdTanggal.textContent = formatTanggalPanjang($('tanggal').value || new Date().toISOString().slice(0,10)); }
+  $('tanggal').addEventListener('input', syncTtdTanggal);
+
+  const aromaPengirimSelect = $('aromaPengirimSelect'), aromaPengirimNama = $('aromaPengirimNama'), aromaPengirimNomor = $('aromaPengirimNomor'), aromaTtdNama = $('aromaTtdNama'), aromaTtdTanggal = $('aromaTtdTanggal');
+  aromaPengirimSelect.addEventListener('change', () => {
+    if (!aromaPengirimSelect.value) return;
+    const p = loadPIC().find(x => x.id === aromaPengirimSelect.value);
+    if (p){ aromaPengirimNama.value = p.nama; syncAromaTtdPIC(); }
+  });
+  function syncAromaTtdPIC(){ aromaTtdNama.textContent = aromaPengirimNama.value.trim() || '(Nama)'; }
+  aromaPengirimNama.addEventListener('input', syncAromaTtdPIC);
+  function syncAromaTtdTanggal(){ aromaTtdTanggal.textContent = formatTanggalPanjang($('aromaTanggal').value || new Date().toISOString().slice(0,10)); }
+  $('aromaTanggal').addEventListener('input', syncAromaTtdTanggal);
+
+  /* ============ SIGNATURE ============ */
+  const canvas = $('signature');
+  const sigPad = new SignaturePad(canvas, { backgroundColor: 'rgb(255,255,255)', penColor: 'rgb(10,26,46)' });
+  const aromaCanvas = $('aromaSignature');
+  const aromaSigPad = new SignaturePad(aromaCanvas, { backgroundColor: 'rgb(255,255,255)', penColor: 'rgb(10,26,46)' });
+  function resizeCanvasBase(cv, sp){
+    const data = sp.isEmpty() ? null : sp.toData();
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    const rect = cv.getBoundingClientRect();
+    if (rect.width === 0) return;
+    cv.width = rect.width * ratio; cv.height = rect.height * ratio;
+    cv.getContext('2d').scale(ratio, ratio);
+    if (data) sp.fromData(data); else sp.clear();
+  }
+  function resizeCanvas(){ resizeCanvasBase(canvas, sigPad); }
+  function resizeAromaCanvas(){ resizeCanvasBase(aromaCanvas, aromaSigPad); }
+  window.addEventListener('resize', () => { resizeCanvas(); resizeAromaCanvas(); });
+  window.addEventListener('orientationchange', () => setTimeout(() => { resizeCanvas(); resizeAromaCanvas(); }, 300));
+  $('clearSig').addEventListener('click', () => { if (sigPad.isEmpty()) return; if (!confirm('Hapus TTD?')) return; sigPad.clear(); });
+  $('aromaClearSig').addEventListener('click', () => { if (aromaSigPad.isEmpty()) return; if (!confirm('Hapus TTD?')) return; aromaSigPad.clear(); });
+
+  /* ============ STORAGE ============ */
+  function loadHistory(){ try { return JSON.parse(localStorage.getItem(KEY_HISTORY)) || []; } catch { return []; } }
+  function saveHistory(list){ localStorage.setItem(KEY_HISTORY, JSON.stringify(list)); }
+  function loadAromaHistory(){ try { return JSON.parse(localStorage.getItem(KEY_AROMA)) || []; } catch { return []; } }
+  function saveAromaHistory(list){ localStorage.setItem(KEY_AROMA, JSON.stringify(list)); }
+
+  /* ============ RIWAYAT ============ */
+  function getFilteredList(){
+    const q = $('searchInput').value.trim().toLowerCase();
+    const jenis = $('jenisFilter').value, status = $('statusFilter').value;
+    const bpom = loadHistory().map(x => ({ ...x, _type: 'bpom' }));
+    const aroma = loadAromaHistory().map(x => ({ ...x, _type: 'sample_aroma' }));
+    return [...bpom, ...aroma].filter(item => {
+      if (jenis !== 'all' && item._type !== jenis) return false;
+      if (status !== 'all' && item.status !== status) return false;
+      if (q){
+        const c = item.customer || {};
+        const hay = ((c.nama||'')+' '+(c.perusahaan||'')+' '+(c.brand||'')).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    }).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
+  function renderHistory(){
+    const all = loadHistory().length + loadAromaHistory().length;
+    const list = getFilteredList();
+    const tbodyH = document.querySelector('#tblRiwayat tbody');
+    tbodyH.innerHTML = '';
+    $('riwayatCount').textContent = list.length === all ? all + ' entri' : list.length + ' / ' + all + ' entri';
+    if (!list.length){ tbodyH.innerHTML = '<tr class="empty-row"><td colspan="7">' + (all === 0 ? 'Belum ada riwayat.' : 'Tidak ada yang cocok.') + '</td></tr>'; return; }
+    list.forEach((item, idx) => {
+      const tr = document.createElement('tr');
+      const isBpom = item._type === 'bpom';
+      const jB = isBpom ? '<span class="badge-jenis badge-bpom">📝 BPOM</span>' : '<span class="badge-jenis badge-aroma">🧪 Aroma</span>';
+      const sB = isBpom ? (item.status === 'approved' ? '<span class="badge badge-ok">✓ Disetujui</span>' : '<span class="badge badge-wait">⏳ Menunggu</span>') : '<span style="color:#aaa;">—</span>';
+      const dS = formatTanggalPendek(item.tanggal || item.customer?.tanggal || item.createdAt);
+      const j = isBpom ? (item.varian?.length||0) + ' varian' : (item.items?.length||0) + ' aroma';
+      const brand = item.customer?.brand || '';
+      const aB = isBpom ? `<button class="icon-btn ok" data-act="approve" data-id="${item.id}" ${item.status==='approved'?'disabled':''}>✓</button>` : '';
+      tr.innerHTML = `
+        <td style="text-align:center;color:#666;">${idx+1}</td>
+        <td>${dS}</td>
+        <td>${jB}</td>
+        <td>
+          <div style="font-weight:600;font-size:13.5px;">${escapeHtml(item.customer?.nama || '-')}</div>
+          <div style="font-size:11.5px;color:#888;">${escapeHtml(item.customer?.perusahaan || '-')}</div>
+          ${brand ? `<div class="brand-line">${escapeHtml(brand)}</div>` : ''}
+        </td>
+        <td style="text-align:center;font-weight:600;">${j}</td>
+        <td>${sB}</td>
+        <td style="text-align:center;white-space:nowrap;">
+          <button class="icon-btn view" data-act="view" data-id="${item.id}">👁</button>
+          ${aB}
+          <button class="icon-btn edit" data-act="edit" data-id="${item.id}">✎</button>
+          <button class="icon-btn del" data-act="delete" data-id="${item.id}">🗑</button>
+        </td>`;
+      tbodyH.appendChild(tr);
+    });
+  }
+  document.querySelector('#tblRiwayat').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const id = btn.dataset.id, act = btn.dataset.act;
+    const isAroma = id.startsWith('AROMA-');
+    const list = isAroma ? loadAromaHistory() : loadHistory();
+    const item = list.find(x => x.id === id);
+    if (!item) return;
+    item._type = isAroma ? 'sample_aroma' : 'bpom';
+    if (act === 'view'){ showDetail(item); }
+    else if (act === 'approve'){
+      if (item.status === 'approved') return;
+      item.status = 'approved'; item.approvedAt = new Date().toISOString();
+      saveHistory(list); queueSync({ type: 'upsert_bpom', data: item }); renderHistory(); toast('Disetujui.','success');
+    } else if (act === 'edit'){ if (isAroma) fillAromaFormForEdit(item); else fillFormForEdit(item); }
+    else if (act === 'delete'){
+      if (!confirm('Hapus entri "'+(item.customer?.nama || '')+'"?')) return;
+      if (isAroma){ saveAromaHistory(list.filter(x => x.id !== id)); queueSync({ type: 'delete_aroma', id }); if (editingAromaId === id) resetAromaForm(); }
+      else { saveHistory(list.filter(x => x.id !== id)); queueSync({ type: 'delete_bpom', id }); if (editingId === id) resetForm(); }
+      renderHistory(); toast('Dihapus.','info');
+    }
+  });
+  $('searchInput').addEventListener('input', renderHistory);
+  $('jenisFilter').addEventListener('change', renderHistory);
+  $('statusFilter').addEventListener('change', renderHistory);
+
+  /* ============ CSV EXPORT ============ */
+  $('btnExport').addEventListener('click', () => {
+    const list = getFilteredList();
+    if (!list.length){ toast('Belum ada data.','error'); return; }
+    const rows = [['No','Jenis','ID','Tanggal','Customer','Perusahaan','Brand/Label','HP/WA','Alamat','PIC','Jumlah','Status','Detail']];
+    list.forEach((item, i) => {
+      const isB = item._type === 'bpom';
+      const detail = isB
+        ? (item.varian||[]).map(v => `${v.no}. ${v.nama||'-'} (${v.warna||'-'}, ${v.ukuran||'-'}, ${v.jenis||'-'})`).join(' ;; ')
+        : (item.items||[]).map(v => `${v.no}. ${v.aroma||'-'} (${v.code||'-'}, ${v.inspirasi||'-'}, ${v.ml||'-'}ml)`).join(' ;; ');
+      rows.push([i+1, isB?'BPOM':'Sample Aroma', item.id, item.tanggal||item.customer?.tanggal||'', item.customer?.nama||'', item.customer?.perusahaan||'', isB?(item.customer?.brand||''):(item.label||''), item.customer?.hp||item.customer?.wa||'', item.customer?.alamat||'', isB?(item.penanggungJawab?.nama||''):(item.pengirim?.nama||''), isB?(item.varian?.length||0)+' varian':(item.items?.length||0)+' aroma', isB?(item.status==='approved'?'Disetujui':'Menunggu'):'-', detail]);
+    });
+    const csv = rows.map(r => r.map(cell => { const s = String(cell ?? '').replace(/"/g, '""'); return /[",\n;]/.test(s) ? '"' + s + '"' : s; }).join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type:'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'riwayat-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click(); URL.revokeObjectURL(url);
+    toast('CSV diunduh.','success');
+  });
+
+  /* ============ PDF ============ */
+  async function downloadPDF(el, filename){
+    if (!el){ toast('Konten tidak ada.','error'); return; }
+    if (typeof html2canvas === 'undefined' || !window.jspdf){ toast('PDF lib belum termuat.','error'); return; }
+    toast('Membuat PDF...','info',1500);
+    document.body.classList.add('pdf-capturing');
+    if (!loadShowKop()) document.body.classList.add('no-kop'); // BARU
+    const sy = window.scrollY; window.scrollTo(0, 0);
+    try {
+      await new Promise(r => setTimeout(r, 120));
+      const cv = await html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false, windowWidth: 900, windowHeight: el.scrollHeight, scrollX: 0, scrollY: 0 });
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p','mm','a4');
+      const pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight(), m = 10;
+      const cw = pw - m*2, uh = ph - m*2;
+      const img = cv.toDataURL('image/jpeg', 0.92);
+      const ih = (cv.height * cw) / cv.width;
+      if (ih <= uh){ pdf.addImage(img, 'JPEG', m, m, cw, ih); }
+      else { let pos = m, left = ih; pdf.addImage(img, 'JPEG', m, pos, cw, ih); left -= uh;
+        while (left > 0){ pos -= uh; pdf.addPage(); pdf.addImage(img, 'JPEG', m, pos, cw, ih); left -= uh; } }
+      pdf.save(filename); toast('PDF diunduh.','success');
+    } catch(err){ toast('Gagal PDF: '+err.message,'error'); }
+    finally { document.body.classList.remove('pdf-capturing', 'no-kop'); window.scrollTo(0, sy); }
+  }
+  function sanitizeFilename(s){ return String(s||'DOKUMEN').replace(/[^a-zA-Z0-9-_]/g,'-').replace(/-+/g,'-').slice(0,40).toUpperCase(); }
+  $('btnDownloadPDF').addEventListener('click', () => {
+    const tgl = ($('tanggal').value || new Date().toISOString().slice(0,10)).replace(/-/g,'');
+    downloadPDF($('formPrintable'), 'FORM-BPOM-' + sanitizeFilename($('brand').value.trim() || $('nama').value.trim() || 'TANPA-NAMA') + '-' + tgl + '.pdf');
+  });
+  $('btnAromaDownloadPDF').addEventListener('click', () => {
+    const tgl = ($('aromaTanggal').value || new Date().toISOString().slice(0,10)).replace(/-/g,'');
+    downloadPDF($('aromaPrintable'), 'SAMPLE-AROMA-' + sanitizeFilename($('aromaNama').value.trim() || 'TANPA-NAMA') + '-' + tgl + '.pdf');
+  });
+  $('btnMobilePDF').addEventListener('click', () => { if (currentTab === 'aroma') $('btnAromaDownloadPDF').click(); else $('btnDownloadPDF').click(); });
+  $('btnMobileSubmit').addEventListener('click', () => { if (currentTab === 'aroma') $('aromaForm').requestSubmit(); else $('form').requestSubmit(); });
+  $('btnMobileCancelEdit').addEventListener('click', () => { if (currentTab === 'aroma'){ resetAromaForm(); toast('Dibatalkan.','info'); } else { resetForm(); toast('Dibatalkan.','info'); } });
+  $('btnDownloadDetailPDF').addEventListener('click', () => {
+    if (!currentDetailItem){ toast('Data tidak ada.','error'); return; }
+    const isA = currentDetailItem._type === 'sample_aroma';
+    const nama = currentDetailItem.customer?.nama || 'TANPA-NAMA';
+    const tgl = (currentDetailItem.tanggal || currentDetailItem.customer?.tanggal || '').replace(/-/g,'');
+    downloadPDF($('detailBody'), (isA ? 'SAMPLE-AROMA-' : 'FORM-BPOM-') + sanitizeFilename(nama) + '-' + (tgl || Date.now()) + '.pdf');
+  });
+
+  /* ============ DETAIL ============ */
+  const detailModal = $('detailModal'), detailBody = $('detailBody');
+  function showDetail(item){
+    currentDetailItem = item;
+    const isA = item._type === 'sample_aroma';
+    const sB = isA ? '<span class="badge-jenis badge-aroma">🧪 Sample Aroma</span>' : (item.status === 'approved' ? '<span class="badge badge-ok">✓ Disetujui</span>' : '<span class="badge badge-wait">⏳ Menunggu</span>');
+    let body = '';
+    if (isA){
+      const rows = (item.items||[]).map((v,i) => `<tr><td style="text-align:center;">${i+1}</td><td>${escapeHtml(v.aroma||'-')}</td><td>${escapeHtml(v.code||'-')}</td><td>${escapeHtml(v.inspirasi||'-')}</td><td style="text-align:center;">${escapeHtml(v.ml||'-')}</td></tr>`).join('');
+      const sig = item.penanggungJawab?.tandaTangan ? '<img class="sig" src="'+item.penanggungJawab.tandaTangan+'">' : '<div class="sig-empty">(tanpa TTD)</div>';
+      body = `
+        <div class="detail-section"><div class="detail-section-title">A. Data Pengiriman</div>
+        <div class="detail-grid">
+          <div><span class="lbl">Tanggal</span><span class="val">${formatTanggalPendek(item.tanggal)}</span></div>
+          <div><span class="lbl">Nama</span><span class="val">${escapeHtml(item.customer?.nama||'-')}</span></div>
+          <div><span class="lbl">Perusahaan</span><span class="val">${escapeHtml(item.customer?.perusahaan||'-')}</span></div>
+          <div><span class="lbl">No. WA</span><span class="val">${escapeHtml(item.customer?.wa||'-')}</span></div>
+          <div class="full"><span class="lbl">Alamat</span><span class="val">${escapeHtml(item.customer?.alamat||'-')}</span></div>
+          <div class="full"><span class="lbl">Label</span><span class="val">${escapeHtml(item.label||'-')}</span></div>
+        </div></div>
+        <div class="detail-section"><div class="detail-section-title">B. Pengirim</div>
+        <div class="detail-grid">
+          <div><span class="lbl">PIC</span><span class="val">${escapeHtml(item.pengirim?.nama||'-')}</span></div>
+          <div><span class="lbl">Nomor</span><span class="val">${escapeHtml(item.pengirim?.nomor||'-')}</span></div>
+        </div></div>
+        <div class="detail-section"><div class="detail-section-title">C. Aroma (${(item.items||[]).length})</div>
+        <table class="detail-varian-table"><thead><tr><th style="width:32px;">No</th><th>Aroma</th><th>Code</th><th>Inspirasi</th><th style="width:50px;">ML</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="5" style="text-align:center;color:#888;">-</td></tr>'}</tbody></table></div>
+        <div class="detail-ttd"><div class="box">
+          <div class="tgl">Surabaya, ${formatTanggalPanjang(item.tanggal || item.createdAt)}</div>
+          <div class="judul">PIC / Pengirim,</div>${sig}
+          <div class="nama">${escapeHtml(item.penanggungJawab?.nama||'-')}</div>
+        </div></div>`;
+    } else {
+      const rows = (item.varian||[]).map((v,i) => `<tr><td style="text-align:center;">${i+1}</td><td>${escapeHtml(v.nama||'-')}</td><td>${escapeHtml(v.warna||'-')}</td><td>${escapeHtml(v.ukuran||'-')}</td><td>${escapeHtml(v.jenis||'-')}</td><td>${escapeHtml(v.keterangan||'-')}</td></tr>`).join('');
+      const sig = item.penanggungJawab?.tandaTangan ? '<img class="sig" src="'+item.penanggungJawab.tandaTangan+'">' : '<div class="sig-empty">(tanpa TTD)</div>';
+      body = `
+        <div class="detail-section"><div class="detail-section-title">A. Data Customer</div>
+        <div class="detail-grid">
+          <div><span class="lbl">Nama</span><span class="val">${escapeHtml(item.customer?.nama||'-')}</span></div>
+          <div><span class="lbl">Perusahaan</span><span class="val">${escapeHtml(item.customer?.perusahaan||'-')}</span></div>
+          <div><span class="lbl">No. HP</span><span class="val">${escapeHtml(item.customer?.hp||'-')}</span></div>
+          <div><span class="lbl">Email</span><span class="val">${escapeHtml(item.customer?.email||'-')}</span></div>
+          <div><span class="lbl">Tanggal</span><span class="val">${formatTanggalPendek(item.customer?.tanggal)}</span></div>
+          <div class="full"><span class="lbl">Alamat</span><span class="val">${escapeHtml(item.customer?.alamat||'-')}</span></div>
+        </div></div>
+        <div class="detail-section"><div class="detail-section-title">B. Varian (${(item.varian||[]).length})</div>
+        <table class="detail-varian-table"><thead><tr><th style="width:32px;">No</th><th>Nama</th><th>Warna</th><th>Ukuran</th><th>Jenis</th><th>Ket</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="6" style="text-align:center;color:#888;">-</td></tr>'}</tbody></table></div>
+        <div class="detail-section"><div class="detail-section-title">C. Brand</div>
+        <div class="detail-grid"><div class="full"><span class="val">${escapeHtml(item.customer?.brand||'-')}</span></div></div></div>
+        <div class="detail-ttd"><div class="box">
+          <div class="tgl">Surabaya, ${formatTanggalPanjang(item.customer?.tanggal || item.createdAt)}</div>
+          <div class="judul">Penanggung Jawab,</div>${sig}
+          <div class="nama">${escapeHtml(item.penanggungJawab?.nama||'-')}</div>
+          <div class="jabatan">${escapeHtml(item.penanggungJawab?.jabatan||'-')}</div>
+        </div></div>`;
+    }
+    detailBody.innerHTML = `
+      <div class="detail-kop"><img src="${logoImg.src}"><div>
+        <div class="kop-nama">CV Scentia Ultimacos</div>
+        <div class="kop-tagline">Beyond Scent, Beyond Limits</div>
+        <div class="kop-alamat">Grand Harvest, Soho HO No.23, Kebraon, Karangpilang, Surabaya, East Java</div>
+        <div class="kop-kontak">Telp. 085743243378 / 08139231068 • info.scentia@gmail.com • www.scentia.id</div>
+      </div></div>
+      <hr style="border:none;border-top:3px solid #0a1a2e;margin:10px 0 2px;">
+      <hr style="border:none;border-top:1px solid #0a1a2e;margin:0 0 16px;">
+      <div class="detail-title">${isA ? 'Detail Sample Aroma' : 'Detail Pendaftaran BPOM'}</div>
+      <div style="text-align:center;margin-bottom:14px;">${sB} <span style="font-size:11px;color:#888;margin-left:8px;">ID: ${escapeHtml(item.id)}</span></div>
+      ${body}
+      <div class="detail-meta">
+        <span>Dibuat: ${new Date(item.createdAt).toLocaleString('id-ID')}</span>
+        ${item.updatedAt ? '<span>Diperbarui: ' + new Date(item.updatedAt).toLocaleString('id-ID') + '</span>' : ''}
+        ${item.approvedAt ? '<span>Disetujui: ' + new Date(item.approvedAt).toLocaleString('id-ID') + '</span>' : ''}
+      </div>`;
+    detailModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDetail(){ detailModal.classList.remove('show'); document.body.style.overflow=''; currentDetailItem = null; }
+  $('btnCloseModal').addEventListener('click', closeDetail);
+  detailModal.addEventListener('click', e => { if (e.target === detailModal) closeDetail(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && detailModal.classList.contains('show')) closeDetail(); });
+
+  /* ============ FORM BPOM state ============ */
+  function fillFormForEdit(item){
+    editingId = item.id;
+    $('nama').value = item.customer.nama || ''; $('perusahaan').value = item.customer.perusahaan || '';
+    $('brand').value = item.customer.brand || ''; $('hp').value = item.customer.hp || '';
+    $('email').value = item.customer.email || ''; $('alamat').value = item.customer.alamat || '';
+    $('tanggal').value = item.customer.tanggal || new Date().toISOString().slice(0,10);
+    $('customerSelectBPOM').value = ''; picSelect.value = '';
+    picNama.value = item.penanggungJawab.nama || ''; picJabatan.value = item.penanggungJawab.jabatan || '';
+    tbody.innerHTML = ''; if (!item.varian.length){ addRow(); addRow(); addRow(); } else item.varian.forEach(v => addRow(v)); renumber();
+    sigPad.clear(); if (item.penanggungJawab.tandaTangan){ try { sigPad.fromDataURL(item.penanggungJawab.tandaTangan); } catch(_){} }
+    syncTtdPIC(); syncTtdTanggal();
+    $('formTitle').textContent = 'Edit Pendaftaran BPOM'; $('btnSubmit').textContent = '💾 Update Data';
+    $('btnCancelEdit').style.display = 'inline-flex'; $('btnMobileSubmit').textContent = '💾 Update';
+    closeDetail(); switchTab('form');
+  }
+  function resetForm(){
+    editingId = null; $('form').reset();
+    $('tanggal').value = new Date().toISOString().slice(0,10);
+    tbody.innerHTML = ''; addRow(); addRow(); addRow(); sigPad.clear();
+    $('customerSelectBPOM').value = '';
+    populatePICDropdowns(); syncTtdPIC(); syncTtdTanggal();
+    $('formTitle').textContent = 'Form Pendaftaran BPOM - Data Varian Produk';
+    $('btnSubmit').textContent = '💾 Simpan / Kirim Data'; $('btnSubmit').disabled = false;
+    $('btnCancelEdit').style.display = 'none'; $('btnMobileSubmit').textContent = '💾 Simpan';
+    updateMobileCancelBtn();
+  }
+  $('btnCancelEdit').addEventListener('click', () => { resetForm(); toast('Dibatalkan.','info'); });
+
+  function fillAromaFormForEdit(item){
+    editingAromaId = item.id;
+    $('aromaTanggal').value = item.tanggal || new Date().toISOString().slice(0,10);
+    $('aromaNama').value = item.customer?.nama || ''; $('aromaPerusahaan').value = item.customer?.perusahaan || '';
+    $('aromaAlamat').value = item.customer?.alamat || ''; $('aromaWa').value = item.customer?.wa || '';
+    $('aromaLabel').value = item.label || '';
+    $('customerSelectAroma').value = ''; aromaPengirimSelect.value = '';
+    aromaPengirimNama.value = item.pengirim?.nama || item.penanggungJawab?.nama || '';
+    aromaPengirimNomor.value = item.pengirim?.nomor || '';
+    aromaTbody.innerHTML = ''; if (!(item.items||[]).length){ addAromaRow(); addAromaRow(); addAromaRow(); } else item.items.forEach(v => addAromaRow(v)); renumberAroma();
+    aromaSigPad.clear(); if (item.penanggungJawab?.tandaTangan){ try { aromaSigPad.fromDataURL(item.penanggungJawab.tandaTangan); } catch(_){} }
+    syncAromaTtdPIC(); syncAromaTtdTanggal();
+    $('aromaFormTitle').textContent = 'Edit Sample Aroma'; $('btnAromaSubmit').textContent = '💾 Update Data';
+    $('btnAromaCancelEdit').style.display = 'inline-flex'; $('btnMobileSubmit').textContent = '💾 Update';
+    closeDetail(); switchTab('aroma');
+  }
+  function resetAromaForm(){
+    editingAromaId = null; $('aromaForm').reset();
+    $('aromaTanggal').value = new Date().toISOString().slice(0,10);
+    aromaTbody.innerHTML = ''; addAromaRow(); addAromaRow(); addAromaRow(); aromaSigPad.clear();
+    $('customerSelectAroma').value = '';
+    populatePICDropdowns(); syncAromaTtdPIC(); syncAromaTtdTanggal();
+    $('aromaFormTitle').textContent = 'Form Sample Aroma';
+    $('btnAromaSubmit').textContent = '💾 Simpan / Kirim Data'; $('btnAromaSubmit').disabled = false;
+    $('btnAromaCancelEdit').style.display = 'none'; $('btnMobileSubmit').textContent = '💾 Simpan';
+    updateMobileCancelBtn();
+  }
+  $('btnAromaCancelEdit').addEventListener('click', () => { resetAromaForm(); toast('Dibatalkan.','info'); });
+
+  /* ============ SUBMIT BPOM ============ */
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = id => $(id).value.trim();
+    if (!v('nama')){ toast('Nama wajib.','error'); $('nama').focus(); return; }
+    if (!v('brand')){ toast('Brand wajib.','error'); $('brand').focus(); return; }
+    const varian = readVarian();
+    if (!varian.length){ toast('Minimal 1 varian.','error'); return; }
+    if (!v('picNama')){ toast('PIC wajib.','error'); $('picNama').focus(); return; }
+    const data = {
+      customer: { nama: v('nama'), perusahaan: v('perusahaan'), brand: v('brand'), email: v('email')||null, hp: v('hp'), alamat: v('alamat'), tanggal: v('tanggal') },
+      varian,
+      penanggungJawab: { nama: v('picNama'), jabatan: v('picJabatan'), tempat: 'Surabaya', tandaTangan: sigPad.isEmpty() ? null : sigPad.toDataURL('image/png') }
+    };
+    upsertCustomer({ nama: data.customer.nama, perusahaan: data.customer.perusahaan, hp: data.customer.hp, email: data.customer.email, alamat: data.customer.alamat });
+    const list = loadHistory();
+    if (editingId){
+      const idx = list.findIndex(x => x.id === editingId);
+      if (idx >= 0){
+        list[idx] = { ...list[idx], ...data, updatedAt: new Date().toISOString() };
+        saveHistory(list); queueSync({ type: 'upsert_bpom', data: list[idx] });
+        toast('Diperbarui & sync.','success'); renderHistory(); resetForm();
+      }
+    } else {
+      const it = { id: 'BPOM-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase(), ...data, status: 'pending', createdAt: new Date().toISOString() };
+      list.push(it); saveHistory(list); queueSync({ type: 'upsert_bpom', data: it });
+      toast('Tersimpan & sync.','success'); renderHistory(); resetForm();
+    }
+  });
+
+  /* ============ SUBMIT AROMA ============ */
+  $('aromaForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = id => $(id).value.trim();
+    if (!v('aromaNama')){ toast('Nama wajib.','error'); $('aromaNama').focus(); return; }
+    const items = readAromaItems();
+    if (!items.length){ toast('Minimal 1 aroma.','error'); return; }
+    if (!v('aromaPengirimNama')){ toast('PIC wajib.','error'); $('aromaPengirimNama').focus(); return; }
+    const data = {
+      tanggal: v('aromaTanggal'),
+      customer: { nama: v('aromaNama'), perusahaan: v('aromaPerusahaan'), alamat: v('aromaAlamat'), wa: v('aromaWa') },
+      label: v('aromaLabel'),
+      pengirim: { nama: v('aromaPengirimNama'), nomor: v('aromaPengirimNomor') },
+      items,
+      penanggungJawab: { nama: v('aromaPengirimNama'), tandaTangan: aromaSigPad.isEmpty() ? null : aromaSigPad.toDataURL('image/png') }
+    };
+    upsertCustomer({ nama: data.customer.nama, perusahaan: data.customer.perusahaan, hp: data.customer.wa, alamat: data.customer.alamat });
+    const list = loadAromaHistory();
+    if (editingAromaId){
+      const idx = list.findIndex(x => x.id === editingAromaId);
+      if (idx >= 0){
+        list[idx] = { ...list[idx], ...data, updatedAt: new Date().toISOString() };
+        saveAromaHistory(list); queueSync({ type: 'upsert_aroma', data: list[idx] });
+        toast('Diperbarui & sync.','success'); renderHistory(); resetAromaForm();
+      }
+    } else {
+      const it = { id: 'AROMA-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase(), ...data, status: 'pending', createdAt: new Date().toISOString() };
+      list.push(it); saveAromaHistory(list); queueSync({ type: 'upsert_aroma', data: it });
+      toast('Tersimpan & sync.','success'); renderHistory(); resetAromaForm();
+    }
+  });
+
+  /* ============ BACKUP / RESTORE LOKAL ============ */
+  $('btnBackup').addEventListener('click', () => {
+    const backup = { version: 4, exportedAt: new Date().toISOString(), app: 'Scentia', logo: localStorage.getItem(KEY_LOGO)||null, showKop: loadShowKop(), masterPic: loadPIC(), customerDb: loadCustomerDB(), history: loadHistory(), aromaHistory: loadAromaHistory() };
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'scentia-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click(); URL.revokeObjectURL(url);
+    toast('Backup diunduh.','success');
+  });
+  $('fileRestore').addEventListener('change', e => {
+    const file = e.target.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!data || typeof data !== 'object') throw new Error('Format invalid');
+        if (!confirm('Restore akan menimpa data lokal & sync ke Supabase. Lanjutkan?')){ e.target.value=''; return; }
+        if (data.history && Array.isArray(data.history)) saveHistory(data.history);
+        if (data.aromaHistory && Array.isArray(data.aromaHistory)) saveAromaHistory(data.aromaHistory);
+        if (data.masterPic && Array.isArray(data.masterPic)) localStorage.setItem(KEY_PIC, JSON.stringify(data.masterPic));
+        if (data.customerDb && Array.isArray(data.customerDb)) saveCustomerDB(data.customerDb);
+        if (data.logo){ saveLogo(data.logo); } else { localStorage.removeItem(KEY_LOGO); }
+        if (data.showKop !== undefined) saveShowKop(!!data.showKop);
+        queueSync({ type: 'bulk_push' });
+        loadLogo(); renderPICTable(); renderCustomerTable(); populatePICDropdowns(); populateCustomerDropdowns(); renderHistory(); applyShowKop();
+        toast('Restore berhasil, syncing ke Supabase...','success', 4000);
+      } catch(err){ toast('Gagal restore: ' + err.message,'error'); }
+      e.target.value = '';
+    };
+    r.readAsText(file);
+  });
+
+  /* ============ RESET ============ */
+  $('btnResetHistory').addEventListener('click', async () => {
+    if (!confirm('Hapus SEMUA riwayat (lokal + Supabase)? Customer tetap aman.')) return;
+    localStorage.removeItem(KEY_HISTORY); localStorage.removeItem(KEY_AROMA);
+    if (sb){
+      try {
+        await Promise.all([
+          sb.from('bpom_documents').delete().neq('id', '___x___'),
+          sb.from('aroma_documents').delete().neq('id', '___x___')
+        ]);
+      } catch(e){ console.warn(e); }
+    }
+    renderHistory(); toast('Riwayat dihapus.','info');
+  });
+  $('btnResetAll').addEventListener('click', async () => {
+    if (!confirm('Reset SEMUA data (lokal + Supabase)?')) return;
+    [KEY_HISTORY,KEY_AROMA,KEY_PIC,KEY_CUSTOMER,KEY_LOGO,KEY_QUEUE,KEY_SHOW_KOP].forEach(k => localStorage.removeItem(k));
+    if (sb){
+      try {
+        await Promise.all([
+          sb.from('customers').delete().neq('id', '___x___'),
+          sb.from('master_pic').delete().neq('id', '___x___'),
+          sb.from('bpom_documents').delete().neq('id', '___x___'),
+          sb.from('aroma_documents').delete().neq('id', '___x___'),
+          sb.from('app_config').delete().neq('key', '___x___')
+        ]);
+      } catch(e){ console.warn(e); }
+    }
+    loadLogo(); renderPICTable(); renderCustomerTable(); populatePICDropdowns(); populateCustomerDropdowns(); renderHistory();
+    resetForm(); resetAromaForm(); applyShowKop();
+    toast('Semua data direset.','info');
+  });
+
+  /* ============ AUTO-FLUSH TRIGGERS ============ */
+  window.addEventListener('online', () => { toast('Online — sync...','info'); flushQueue(); });
+  window.addEventListener('offline', () => { setSyncState('offline', '⚠ Offline — data akan di-sync saat online'); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && loadQueue().length) flushQueue(); });
+  setInterval(() => { if (loadQueue().length && !isSyncing) flushQueue(); }, 15000);
+
+  /* ============ INIT ============ */
+  async function init(){
+    await initialPull();
+
+    loadLogo(); renderPICTable(); renderCustomerTable();
+    populatePICDropdowns(); populateCustomerDropdowns();
+    applyShowKop(); // BARU
+
+    addRow(); addRow(); addRow();
+    $('tanggal').value = new Date().toISOString().slice(0,10);
+    syncTtdPIC(); syncTtdTanggal();
+
+    addAromaRow(); addAromaRow(); addAromaRow();
+    $('aromaTanggal').value = new Date().toISOString().slice(0,10);
+    syncAromaTtdPIC(); syncAromaTtdTanggal();
+
+    setTimeout(() => { resizeCanvas(); resizeAromaCanvas(); }, 50);
+    renderHistory();
+
+    if (loadQueue().length) flushQueue();
+  }
+  init();
+})();
+</script>
+</body>
+</html>
