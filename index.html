@@ -80,12 +80,29 @@
   .ttd-inner .nama{font-weight:600;margin-top:6px;text-decoration:underline;font-size:13px;}
   .ttd-inner .jabatan{font-size:12px;color:#555;margin-top:1px;}
 
+  /* ===== FORM SECTION CARDS (COLLAPSIBLE) ===== */
+  .form-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:14px;overflow:hidden;transition:box-shadow .2s;}
+  .form-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04);}
+  .form-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,#f8fafc 0%,#eef2f6 100%);cursor:pointer;user-select:none;border-bottom:1px solid #e5e7eb;gap:10px;}
+  .form-card-header h2{margin:0;padding:0;border:none;font-size:12.5px;color:#0a1a2e;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;flex:1;}
+  .form-card-header h2 .ico{font-size:16px;}
+  .form-card-header .chevron{transition:transform .2s;color:#888;font-size:18px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .form-card.collapsed .chevron{transform:rotate(-90deg);}
+  .form-card-body{padding:16px;display:block;}
+  .form-card.collapsed .form-card-body{display:none;}
+
   .riwayat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
   .riwayat-header h2{margin:0;border:none;padding:0;font-size:14px;}
   .riwayat-count{font-size:12px;color:#666;background:#eef2f6;padding:3px 10px;border-radius:10px;}
-  .riwayat-toolbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
-  .riwayat-toolbar input[type=text]{flex:1;min-width:160px;}
-  .riwayat-toolbar select{width:auto;min-width:130px;}
+  .riwayat-toolbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
+  .riwayat-toolbar input[type=text]{flex:1;min-width:180px;}
+
+  /* ===== FILTER CHIPS ===== */
+  .chip-bar{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;margin-bottom:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .chip-bar::-webkit-scrollbar{display:none;}
+  .chip{flex:0 0 auto;padding:7px 14px;border-radius:20px;border:1px solid #d6dce2;background:#fff;font-size:12.5px;font-weight:600;color:#555;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit;}
+  .chip:hover{background:#f5f6f8;}
+  .chip.active{background:#0a1a2e;color:#fff;border-color:#0a1a2e;}
 
   #tblRiwayat{font-size:12.5px;}
   #tblRiwayat td{padding:8px;}
@@ -137,7 +154,6 @@
   .backup-actions label.btn{cursor:pointer;}
   .backup-actions input[type=file]{display:none;}
 
-  /* ===== TOGGLE SWITCH (BARU) ===== */
   .toggle-switch{position:relative;display:inline-block;width:48px;height:26px;flex-shrink:0;}
   .toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
   .toggle-slider{position:absolute;cursor:pointer;inset:0;background:#cfd6de;border-radius:26px;transition:.2s;}
@@ -231,8 +247,12 @@
     #tblRiwayat tbody tr td:nth-child(5){font-size:12px;color:#666;display:inline-block;margin-right:8px;}
     #tblRiwayat tbody tr td:nth-child(6){display:inline-block;padding-left:4px;}
     #tblRiwayat tbody tr td:last-child{padding-top:10px;border-top:1px dashed #e5e7eb;margin-top:6px;text-align:left;}
-    .riwayat-toolbar{flex-direction:column;gap:8px;}
-    .riwayat-toolbar input, .riwayat-toolbar select, .riwayat-toolbar .btn{width:100%;}
+    .riwayat-toolbar{flex-direction:column;gap:8px;align-items:stretch;}
+    .riwayat-toolbar input, .riwayat-toolbar .btn{width:100%;}
+    .form-card{border-radius:10px;margin-bottom:12px;}
+    .form-card-header{padding:14px 14px;}
+    .form-card-header h2{font-size:12px;}
+    .form-card-body{padding:14px;}
     .pic-form{flex-direction:column;gap:10px;}
     .pic-form .field{min-width:100%;}
     .pic-form .field.chk{padding-bottom:0;}
@@ -241,9 +261,9 @@
     .backup-actions .btn{width:100%;}
     .toggle-row{gap:10px;}
     .toggle-status{margin-left:0;}
-    .mobile-action-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 14px calc(12px + env(safe-area-inset-bottom, 0px));box-shadow:0 -3px 14px rgba(0,0,0,.12);z-index:100;gap:8px;border-top:1px solid #e5e7eb;}
-    .mobile-action-bar .btn{flex:1;min-height:50px;font-size:15px;}
-    .mobile-action-bar .btn-icon-only{flex:0 0 50px;padding:0;}
+    .mobile-action-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 12px calc(12px + env(safe-area-inset-bottom, 0px));box-shadow:0 -3px 14px rgba(0,0,0,.12);z-index:100;gap:8px;border-top:1px solid #e5e7eb;}
+    .mobile-action-bar .btn{flex:1;min-height:50px;font-size:13px;padding:0 6px;}
+    .mobile-action-bar .btn-icon-only{flex:0 0 44px;padding:0;font-size:18px;}
     .modal{padding:0;}
     .modal-content{border-radius:0;min-height:100vh;padding:16px;}
     .modal-actions{position:sticky;top:0;background:#fff;padding-bottom:12px;z-index:10;border-bottom:1px solid #eee;margin:-16px -16px 12px;padding:12px 16px;}
@@ -275,8 +295,14 @@
   body.pdf-capturing .btn-ghost{display:none !important;}
   body.pdf-capturing input, body.pdf-capturing textarea, body.pdf-capturing select{font-size:14px !important;padding:8px 10px !important;min-height:auto !important;box-shadow:none !important;}
   body.pdf-capturing .icon-btn{display:none !important;}
+  /* Expand semua card saat PDF */
+  body.pdf-capturing .form-card{border:none !important;border-radius:0 !important;margin-bottom:16px !important;box-shadow:none !important;}
+  body.pdf-capturing .form-card-header{background:none !important;padding:0 0 6px 0 !important;border:none !important;border-bottom:1px solid #d6dce2 !important;margin-bottom:10px !important;cursor:default !important;}
+  body.pdf-capturing .form-card-header h2{font-size:12.5px !important;margin:0 !important;padding:0 !important;border:none !important;}
+  body.pdf-capturing .form-card-header .chevron{display:none !important;}
+  body.pdf-capturing .form-card-body{display:block !important;padding:0 !important;animation:none !important;}
+  body.pdf-capturing .form-card.collapsed .form-card-body{display:block !important;}
 
-  /* ===== SEMBUNYIKAN KOP SAAT PDF (BARU) ===== */
   body.pdf-capturing.no-kop .kop,
   body.pdf-capturing.no-kop .kop-line,
   body.pdf-capturing.no-kop .kop-line2,
@@ -315,60 +341,93 @@
       </div>
       <hr class="kop-line"><hr class="kop-line2">
       <h1 id="formTitle">Form Pendaftaran BPOM - Data Varian Produk</h1>
+
       <form id="form" novalidate>
-        <h2>A. Data Customer</h2>
-        <div class="row no-print">
-          <div class="field full">
-            <label for="customerSelectBPOM">👤 Pilih dari Database Customer</label>
-            <select id="customerSelectBPOM"><option value="">— Pilih atau isi manual —</option></select>
+
+        <div class="form-card" data-section="customer">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">👤</span> A. Data Customer</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <div class="row no-print">
+              <div class="field full">
+                <label for="customerSelectBPOM">👤 Pilih dari Database Customer</label>
+                <select id="customerSelectBPOM"><option value="">— Pilih atau isi manual —</option></select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="nama">Nama Customer <span class="req">*</span></label><input id="nama" required autocomplete="name"></div>
+              <div class="field"><label for="perusahaan">Perusahaan / Instansi</label><input id="perusahaan" autocomplete="organization"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="hp">No. HP / WhatsApp</label><input id="hp" type="tel" inputmode="tel"></div>
+              <div class="field"><label for="email">Email <span style="color:#888;font-weight:400;">(opsional)</span></label><input id="email" type="email" inputmode="email"></div>
+              <div class="field"><label for="tanggal">Tanggal</label><input id="tanggal" type="date"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="alamat">Alamat</label><textarea id="alamat" rows="2"></textarea></div>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="nama">Nama Customer <span class="req">*</span></label><input id="nama" required autocomplete="name"></div>
-          <div class="field"><label for="perusahaan">Perusahaan / Instansi</label><input id="perusahaan" autocomplete="organization"></div>
-        </div>
-        <div class="row">
-          <div class="field"><label for="hp">No. HP / WhatsApp</label><input id="hp" type="tel" inputmode="tel"></div>
-          <div class="field"><label for="email">Email <span style="color:#888;font-weight:400;">(opsional)</span></label><input id="email" type="email" inputmode="email"></div>
-          <div class="field"><label for="tanggal">Tanggal</label><input id="tanggal" type="date"></div>
-        </div>
-        <div class="row">
-          <div class="field"><label for="alamat">Alamat</label><textarea id="alamat" rows="2"></textarea></div>
-        </div>
 
-        <h2>B. Daftar Varian</h2>
-        <table id="tblVarian">
-          <thead><tr><th>No</th><th>Nama Varian</th><th>Warna</th><th>Ukuran</th><th>Jenis</th><th>Keterangan</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-        <div class="addRow no-print"><button type="button" class="btn btn-secondary" id="addRow">+ Tambah Varian</button></div>
-
-        <h2>C. Brand yang Digunakan</h2>
-        <div class="row">
-          <div class="field full"><label for="brand">Nama Brand <span class="req">*</span></label><input id="brand" placeholder="mis. Scentia Ultimacos, Glowlab, dll." required></div>
-        </div>
-
-        <h2>D. Penanggung Jawab</h2>
-        <div class="row">
-          <div class="field"><label for="picSelect">Pilih dari Master</label><select id="picSelect"></select></div>
-          <div class="field"><label for="picNama">Nama Penanggung Jawab</label><input id="picNama"></div>
-          <div class="field"><label for="picJabatan">Jabatan</label><input id="picJabatan"></div>
-        </div>
-        <div class="ttd-block">
-          <div class="ttd-inner">
-            <div class="tgl">Surabaya, <span id="ttdTanggal"></span></div>
-            <div class="judul">Penanggung Jawab,</div>
-            <div class="canvas-wrap"><canvas id="signature"></canvas></div>
-            <div class="canvas-bar no-print"><button type="button" class="btn btn-ghost" id="clearSig" style="font-size:12px;">↺ Hapus tanda tangan</button></div>
-            <div class="nama" id="ttdNama">(Nama)</div>
-            <div class="jabatan" id="ttdJabatan">Jabatan</div>
+        <div class="form-card" data-section="varian">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">📦</span> B. Daftar Varian</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <table id="tblVarian">
+              <thead><tr><th>No</th><th>Nama Varian</th><th>Warna</th><th>Ukuran</th><th>Jenis</th><th>Keterangan</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="addRow no-print"><button type="button" class="btn btn-secondary" id="addRow">+ Tambah Varian</button></div>
           </div>
         </div>
+
+        <div class="form-card" data-section="brand">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">🏷</span> C. Brand yang Digunakan</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <div class="row">
+              <div class="field full"><label for="brand">Nama Brand <span class="req">*</span></label><input id="brand" placeholder="mis. Scentia Ultimacos, Glowlab, dll." required></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card" data-section="pic">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">✍️</span> D. Penanggung Jawab</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <div class="row">
+              <div class="field"><label for="picSelect">Pilih dari Master</label><select id="picSelect"></select></div>
+              <div class="field"><label for="picNama">Nama Penanggung Jawab</label><input id="picNama"></div>
+              <div class="field"><label for="picJabatan">Jabatan</label><input id="picJabatan"></div>
+            </div>
+            <div class="ttd-block">
+              <div class="ttd-inner">
+                <div class="tgl">Surabaya, <span id="ttdTanggal"></span></div>
+                <div class="judul">Penanggung Jawab,</div>
+                <div class="canvas-wrap"><canvas id="signature"></canvas></div>
+                <div class="canvas-bar no-print"><button type="button" class="btn btn-ghost" id="clearSig" style="font-size:12px;">↺ Hapus tanda tangan</button></div>
+                <div class="nama" id="ttdNama">(Nama)</div>
+                <div class="jabatan" id="ttdJabatan">Jabatan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </form>
     </div>
+
     <div class="actions no-print desktop-only">
       <button type="button" class="btn btn-secondary" id="btnCancelEdit" style="display:none;">Batal Edit</button>
-      <button type="button" class="btn btn-secondary" id="btnDownloadPDF">⬇ Download PDF</button>
+      <button type="button" class="btn btn-secondary" id="btnDownloadPNG">🖼 PNG</button>
+      <button type="button" class="btn btn-secondary" id="btnDownloadPDF">⬇ PDF</button>
       <button type="submit" form="form" class="btn btn-primary" id="btnSubmit">💾 Simpan / Kirim Data</button>
     </div>
   </div>
@@ -387,55 +446,81 @@
       </div>
       <hr class="kop-line"><hr class="kop-line2">
       <h1 id="aromaFormTitle">Form Sample Aroma</h1>
+
       <form id="aromaForm" novalidate>
-        <h2>A. Data Pengiriman</h2>
-        <div class="row no-print">
-          <div class="field full">
-            <label for="customerSelectAroma">👤 Pilih dari Database Customer</label>
-            <select id="customerSelectAroma"><option value="">— Pilih atau isi manual —</option></select>
+
+        <div class="form-card" data-section="aroma-pengiriman">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">📦</span> A. Data Pengiriman</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <div class="row no-print">
+              <div class="field full">
+                <label for="customerSelectAroma">👤 Pilih dari Database Customer</label>
+                <select id="customerSelectAroma"><option value="">— Pilih atau isi manual —</option></select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="aromaTanggal">Tanggal</label><input id="aromaTanggal" type="date"></div>
+              <div class="field"><label for="aromaNama">Nama Customer <span class="req">*</span></label><input id="aromaNama" required></div>
+              <div class="field"><label for="aromaPerusahaan">Perusahaan</label><input id="aromaPerusahaan"></div>
+            </div>
+            <div class="row">
+              <div class="field full"><label for="aromaAlamat">Alamat Penerima</label><textarea id="aromaAlamat" rows="2"></textarea></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="aromaWa">No. WA</label><input id="aromaWa" type="tel" inputmode="tel"></div>
+              <div class="field"><label for="aromaLabel">Label</label><input id="aromaLabel" placeholder="mis. Untuk Testing, Sample Gratis"></div>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="aromaTanggal">Tanggal</label><input id="aromaTanggal" type="date"></div>
-          <div class="field"><label for="aromaNama">Nama Customer <span class="req">*</span></label><input id="aromaNama" required></div>
-          <div class="field"><label for="aromaPerusahaan">Perusahaan</label><input id="aromaPerusahaan"></div>
-        </div>
-        <div class="row">
-          <div class="field full"><label for="aromaAlamat">Alamat Penerima</label><textarea id="aromaAlamat" rows="2"></textarea></div>
-        </div>
-        <div class="row">
-          <div class="field"><label for="aromaWa">No. WA</label><input id="aromaWa" type="tel" inputmode="tel"></div>
-          <div class="field"><label for="aromaLabel">Label</label><input id="aromaLabel" placeholder="mis. Untuk Testing, Sample Gratis"></div>
-        </div>
 
-        <h2>B. Data Pengirim</h2>
-        <div class="row">
-          <div class="field"><label for="aromaPengirimSelect">Pilih dari Master</label><select id="aromaPengirimSelect"></select></div>
-          <div class="field"><label for="aromaPengirimNama">PIC / Pengirim <span class="req">*</span></label><input id="aromaPengirimNama" required></div>
-          <div class="field"><label for="aromaPengirimNomor">Nomor Pengirim</label><input id="aromaPengirimNomor" type="tel" inputmode="tel"></div>
-        </div>
-
-        <h2>C. Daftar Sample Aroma</h2>
-        <table id="tblAroma">
-          <thead><tr><th>No</th><th>Aroma</th><th>Code</th><th>Inspirasi</th><th>ML</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-        <div class="addRow no-print"><button type="button" class="btn btn-secondary" id="addAromaRow">+ Tambah Aroma</button></div>
-
-        <div class="ttd-block">
-          <div class="ttd-inner">
-            <div class="tgl">Surabaya, <span id="aromaTtdTanggal"></span></div>
-            <div class="judul">PIC / Pengirim,</div>
-            <div class="canvas-wrap"><canvas id="aromaSignature"></canvas></div>
-            <div class="canvas-bar no-print"><button type="button" class="btn btn-ghost" id="aromaClearSig" style="font-size:12px;">↺ Hapus tanda tangan</button></div>
-            <div class="nama" id="aromaTtdNama">(Nama)</div>
+        <div class="form-card" data-section="aroma-pengirim">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">🚚</span> B. Data Pengirim</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <div class="row">
+              <div class="field"><label for="aromaPengirimSelect">Pilih dari Master</label><select id="aromaPengirimSelect"></select></div>
+              <div class="field"><label for="aromaPengirimNama">PIC / Pengirim <span class="req">*</span></label><input id="aromaPengirimNama" required></div>
+              <div class="field"><label for="aromaPengirimNomor">Nomor Pengirim</label><input id="aromaPengirimNomor" type="tel" inputmode="tel"></div>
+            </div>
           </div>
         </div>
+
+        <div class="form-card" data-section="aroma-items">
+          <div class="form-card-header" data-toggle>
+            <h2><span class="ico">🧪</span> C. Daftar Sample Aroma</h2>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="form-card-body">
+            <table id="tblAroma">
+              <thead><tr><th>No</th><th>Aroma</th><th>Code</th><th>Inspirasi</th><th>ML</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="addRow no-print"><button type="button" class="btn btn-secondary" id="addAromaRow">+ Tambah Aroma</button></div>
+
+            <div class="ttd-block">
+              <div class="ttd-inner">
+                <div class="tgl">Surabaya, <span id="aromaTtdTanggal"></span></div>
+                <div class="judul">PIC / Pengirim,</div>
+                <div class="canvas-wrap"><canvas id="aromaSignature"></canvas></div>
+                <div class="canvas-bar no-print"><button type="button" class="btn btn-ghost" id="aromaClearSig" style="font-size:12px;">↺ Hapus tanda tangan</button></div>
+                <div class="nama" id="aromaTtdNama">(Nama)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </form>
     </div>
+
     <div class="actions no-print desktop-only">
       <button type="button" class="btn btn-secondary" id="btnAromaCancelEdit" style="display:none;">Batal Edit</button>
-      <button type="button" class="btn btn-secondary" id="btnAromaDownloadPDF">⬇ Download PDF</button>
+      <button type="button" class="btn btn-secondary" id="btnAromaDownloadPNG">🖼 PNG</button>
+      <button type="button" class="btn btn-secondary" id="btnAromaDownloadPDF">⬇ PDF</button>
       <button type="submit" form="aromaForm" class="btn btn-primary" id="btnAromaSubmit">💾 Simpan / Kirim Data</button>
     </div>
   </div>
@@ -446,20 +531,36 @@
       <h2>Riwayat Dokumen</h2>
       <span class="riwayat-count" id="riwayatCount">0 entri</span>
     </div>
-    <div class="riwayat-toolbar">
-      <input type="text" id="searchInput" placeholder="🔍 Cari nama, brand, atau perusahaan...">
-      <select id="jenisFilter">
-        <option value="all">Semua Jenis</option>
-        <option value="bpom">📝 BPOM</option>
-        <option value="sample_aroma">🧪 Aroma</option>
-      </select>
-      <select id="statusFilter">
-        <option value="all">Semua Status</option>
-        <option value="pending">⏳ Menunggu</option>
-        <option value="approved">✓ Disetujui</option>
-      </select>
+
+    <input type="text" id="searchInput" placeholder="🔍 Cari nama, brand, atau perusahaan..." style="margin-bottom:8px;">
+
+    <div class="chip-bar" data-chip-for="jenisFilter">
+      <button type="button" class="chip active" data-value="all">Semua Jenis</button>
+      <button type="button" class="chip" data-value="bpom">📝 BPOM</button>
+      <button type="button" class="chip" data-value="sample_aroma">🧪 Aroma</button>
+    </div>
+    <div class="chip-bar" data-chip-for="statusFilter">
+      <button type="button" class="chip active" data-value="all">Semua Status</button>
+      <button type="button" class="chip" data-value="pending">⏳ Menunggu</button>
+      <button type="button" class="chip" data-value="approved">✓ Disetujui</button>
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:10px;">
       <button type="button" class="btn btn-secondary" id="btnExport">⬇ Export CSV</button>
     </div>
+
+    <!-- hidden selects (kompatibel dengan JS lama) -->
+    <select id="jenisFilter" style="display:none;">
+      <option value="all">Semua Jenis</option>
+      <option value="bpom">BPOM</option>
+      <option value="sample_aroma">Aroma</option>
+    </select>
+    <select id="statusFilter" style="display:none;">
+      <option value="all">Semua Status</option>
+      <option value="pending">Menunggu</option>
+      <option value="approved">Disetujui</option>
+    </select>
+
     <table id="tblRiwayat">
       <thead><tr><th style="width:36px;">No</th><th style="width:80px;">Tanggal</th><th style="width:90px;">Jenis</th><th>Customer</th><th style="width:90px;text-align:center;">Jumlah</th><th style="width:100px;">Status</th><th style="width:150px;text-align:center;">Aksi</th></tr></thead>
       <tbody></tbody>
@@ -482,7 +583,6 @@
       </div>
     </div>
 
-    <!-- ===== CARD BARU: TAMPILAN PDF ===== -->
     <div class="master-card">
       <h3>📄 Tampilan PDF</h3>
       <p class="hint">Atur apakah kop perusahaan (logo, nama, alamat, kontak) ikut dicetak di PDF.</p>
@@ -553,6 +653,7 @@
 <div class="mobile-action-bar no-print" id="mobileBar">
   <button type="button" class="btn btn-secondary btn-icon-only" id="btnMobileCancelEdit" style="display:none;" title="Batal Edit">✕</button>
   <button type="button" class="btn btn-secondary" id="btnMobilePDF">⬇ PDF</button>
+  <button type="button" class="btn btn-secondary btn-icon-only" id="btnMobilePNG" title="Download PNG">🖼</button>
   <button type="button" class="btn btn-primary" id="btnMobileSubmit">💾 Simpan</button>
 </div>
 
@@ -562,6 +663,7 @@
       <span class="modal-title">Detail Dokumen</span>
       <div style="display:flex;gap:8px;">
         <button type="button" class="btn btn-secondary" id="btnCloseModal">Tutup</button>
+        <button type="button" class="btn btn-secondary" id="btnDownloadDetailPNG">🖼 PNG</button>
         <button type="button" class="btn btn-primary" id="btnDownloadDetailPDF">⬇ PDF</button>
       </div>
     </div>
@@ -580,7 +682,7 @@
   const KEY_PIC = 'scentia_master_pic';
   const KEY_CUSTOMER = 'scentia_customer_db';
   const KEY_QUEUE = 'scentia_sync_queue';
-  const KEY_SHOW_KOP = 'scentia_show_kop'; // BARU
+  const KEY_SHOW_KOP = 'scentia_show_kop';
 
   const DEFAULT_LOGO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='10' fill='%230a1a2e'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='40' font-weight='600' fill='%23b8934a' text-anchor='middle' letter-spacing='-1'%3ESU%3C/text%3E%3C/svg%3E";
   const DEFAULT_PIC = [{ id: 'p_default', nama: 'Nama Lengkap PIC', jabatan: 'Direktur', isDefault: true }];
@@ -609,7 +711,7 @@
     label.textContent = text || '';
   }
 
-  /* ============ SHOW KOP TOGGLE (BARU) ============ */
+  /* ============ SHOW KOP TOGGLE ============ */
   function loadShowKop(){
     const v = localStorage.getItem(KEY_SHOW_KOP);
     return v === null ? true : v === '1';
@@ -669,7 +771,7 @@
     } else if (t === 'upsert_logo'){
       const { error } = await sb.from('app_config').upsert({ key: 'logo', value: op.value });
       if (error) throw error;
-    } else if (t === 'upsert_show_kop'){ // BARU
+    } else if (t === 'upsert_show_kop'){
       const { error } = await sb.from('app_config').upsert({ key: 'show_kop', value: op.value });
       if (error) throw error;
     } else if (t === 'upsert_bpom'){
@@ -740,14 +842,12 @@
       const { error } = await sb.from('app_config').upsert({ key: 'logo', value: logo });
       if (error) throw error;
     }
-    // BARU: push show_kop
     try {
       const { error } = await sb.from('app_config').upsert({ key: 'show_kop', value: loadShowKop() ? '1' : '0' });
       if (error) throw error;
     } catch(e){ console.warn('push show_kop', e); }
   }
 
-  /* ============ FLUSH QUEUE ============ */
   async function flushQueue(){
     if (!sb || isSyncing) return;
     const q = loadQueue();
@@ -755,7 +855,6 @@
 
     isSyncing = true;
     setSyncState('loading', 'Menyinkronkan ' + q.length + ' perubahan...');
-    let successCount = 0;
 
     try {
       while (loadQueue().length > 0){
@@ -763,7 +862,6 @@
         try {
           await execOp(op);
           dequeueFirst();
-          successCount++;
         } catch(e){
           console.error('Sync op failed', op.type, e);
           throw e;
@@ -788,7 +886,6 @@
     setSyncState('loading', 'Menyinkronkan...');
   }
 
-  /* ============ PULL FROM SUPABASE ============ */
   async function initialPull(){
     if (!sb){
       setSyncState('offline', '⚠ Supabase tidak termuat — mode lokal');
@@ -856,7 +953,6 @@
       const logoRow = (cfg.data || []).find(r => r.key === 'logo');
       if (logoRow?.value) localStorage.setItem(KEY_LOGO, logoRow.value);
 
-      // BARU: baca show_kop dari remote
       const kopRow = (cfg.data || []).find(r => r.key === 'show_kop');
       if (kopRow && kopRow.value !== undefined && kopRow.value !== null){
         saveShowKop(kopRow.value === '1' || kopRow.value === true);
@@ -880,6 +976,53 @@
     document.body.appendChild(el);
     requestAnimationFrame(() => el.classList.add('show'));
     setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, dur);
+  }
+
+  /* ============ FORM CARDS (COLLAPSIBLE) ============ */
+  function initFormCards(){
+    document.querySelectorAll('.form-card').forEach(card => {
+      const header = card.querySelector('[data-toggle]');
+      if (!header) return;
+      header.addEventListener('click', () => {
+        card.classList.toggle('collapsed');
+        // Resize canvas if expanding a card that contains it
+        if (!card.classList.contains('collapsed')){
+          const cv = card.querySelector('canvas');
+          if (cv){
+            setTimeout(() => {
+              if (cv.id === 'signature') resizeCanvas();
+              else if (cv.id === 'aromaSignature') resizeAromaCanvas();
+            }, 60);
+          }
+        }
+      });
+    });
+    if (window.innerWidth <= 640){
+      document.querySelectorAll('.form-card').forEach((card, i) => {
+        if (i > 0) card.classList.add('collapsed');
+      });
+    }
+  }
+
+  function expandCardOf(el){
+    const card = el.closest('.form-card');
+    if (card && card.classList.contains('collapsed')) card.classList.remove('collapsed');
+  }
+
+  /* ============ CHIP BARS ============ */
+  function initChipBars(){
+    document.querySelectorAll('.chip-bar').forEach(bar => {
+      const targetId = bar.dataset.chipFor;
+      if (!targetId) return;
+      bar.addEventListener('click', e => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
+        bar.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        $(targetId).value = chip.dataset.value;
+        renderHistory();
+      });
+    });
   }
 
   /* ============ TABS ============ */
@@ -926,7 +1069,6 @@
     toast('Logo direset.','info');
   });
 
-  /* ============ TOGGLE KOP LISTENER (BARU) ============ */
   $('toggleKop').addEventListener('change', e => {
     const on = e.target.checked;
     saveShowKop(on);
@@ -1212,7 +1354,7 @@
       if (status !== 'all' && item.status !== status) return false;
       if (q){
         const c = item.customer || {};
-        const hay = ((c.nama||'')+' '+(c.perusahaan||'')+' '+(c.brand||'')).toLowerCase();
+        const hay = ((c.nama||'')+' '+(c.perusahaan||'')+' '+(c.brand||'')+' '+(item.label||'')).toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -1276,8 +1418,6 @@
     }
   });
   $('searchInput').addEventListener('input', renderHistory);
-  $('jenisFilter').addEventListener('change', renderHistory);
-  $('statusFilter').addEventListener('change', renderHistory);
 
   /* ============ CSV EXPORT ============ */
   $('btnExport').addEventListener('click', () => {
@@ -1299,48 +1439,113 @@
     toast('CSV diunduh.','success');
   });
 
-  /* ============ PDF ============ */
-  async function downloadPDF(el, filename){
+  /* ============ PDF / PNG (COMPRESSED) ============ */
+  async function downloadPDF(el, filename, opts = {}){
     if (!el){ toast('Konten tidak ada.','error'); return; }
     if (typeof html2canvas === 'undefined' || !window.jspdf){ toast('PDF lib belum termuat.','error'); return; }
-    toast('Membuat PDF...','info',1500);
+
+    const format  = opts.format  || 'pdf';
+    const isMobile = window.innerWidth <= 640;
+    const scale   = opts.scale   || (isMobile ? 1.4 : 1.8);
+    const quality = opts.quality || 0.72;
+
+    toast(format === 'png' ? '📸 Membuat PNG...' : '📄 Membuat PDF...', 'info', 1200);
     document.body.classList.add('pdf-capturing');
-    if (!loadShowKop()) document.body.classList.add('no-kop'); // BARU
+    if (!loadShowKop()) document.body.classList.add('no-kop');
     const sy = window.scrollY; window.scrollTo(0, 0);
+
     try {
-      await new Promise(r => setTimeout(r, 120));
-      const cv = await html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false, windowWidth: 900, windowHeight: el.scrollHeight, scrollX: 0, scrollY: 0 });
+      await new Promise(r => setTimeout(r, 140));
+      const cv = await html2canvas(el, {
+        scale, useCORS: true, allowTaint: true,
+        backgroundColor: '#ffffff', logging: false,
+        windowWidth: 900, windowHeight: el.scrollHeight,
+        scrollX: 0, scrollY: 0, removeContainer: true, imageTimeout: 15000
+      });
+
+      if (format === 'png'){
+        cv.toBlob(blob => {
+          if (!blob){ toast('Gagal buat PNG','error'); return; }
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename.replace(/\.pdf$/i, '') + '.png';
+          a.click();
+          setTimeout(() => URL.revokeObjectURL(url), 3000);
+          toast('PNG (' + Math.round(blob.size/1024) + ' KB) diunduh.', 'success');
+        }, 'image/png');
+        return;
+      }
+
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF('p','mm','a4');
       const pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight(), m = 10;
       const cw = pw - m*2, uh = ph - m*2;
-      const img = cv.toDataURL('image/jpeg', 0.92);
-      const ih = (cv.height * cw) / cv.width;
-      if (ih <= uh){ pdf.addImage(img, 'JPEG', m, m, cw, ih); }
-      else { let pos = m, left = ih; pdf.addImage(img, 'JPEG', m, pos, cw, ih); left -= uh;
-        while (left > 0){ pos -= uh; pdf.addPage(); pdf.addImage(img, 'JPEG', m, pos, cw, ih); left -= uh; } }
-      pdf.save(filename); toast('PDF diunduh.','success');
-    } catch(err){ toast('Gagal PDF: '+err.message,'error'); }
-    finally { document.body.classList.remove('pdf-capturing', 'no-kop'); window.scrollTo(0, sy); }
+      const img = cv.toDataURL('image/jpeg', quality);
+      const ih  = (cv.height * cw) / cv.width;
+
+      if (ih <= uh){
+        pdf.addImage(img, 'JPEG', m, m, cw, ih, undefined, 'FAST');
+      } else {
+        let pos = m, left = ih;
+        pdf.addImage(img, 'JPEG', m, pos, cw, ih, undefined, 'FAST');
+        left -= uh;
+        while (left > 0){
+          pos -= uh; pdf.addPage();
+          pdf.addImage(img, 'JPEG', m, pos, cw, ih, undefined, 'FAST');
+          left -= uh;
+        }
+      }
+      pdf.save(filename);
+      toast('PDF diunduh.','success');
+    } catch(err){
+      toast('Gagal: ' + err.message, 'error');
+    } finally {
+      document.body.classList.remove('pdf-capturing', 'no-kop');
+      window.scrollTo(0, sy);
+    }
   }
+
+  function downloadPNG(el, filename){
+    return downloadPDF(el, filename, { format: 'png' });
+  }
+
   function sanitizeFilename(s){ return String(s||'DOKUMEN').replace(/[^a-zA-Z0-9-_]/g,'-').replace(/-+/g,'-').slice(0,40).toUpperCase(); }
+
   $('btnDownloadPDF').addEventListener('click', () => {
     const tgl = ($('tanggal').value || new Date().toISOString().slice(0,10)).replace(/-/g,'');
     downloadPDF($('formPrintable'), 'FORM-BPOM-' + sanitizeFilename($('brand').value.trim() || $('nama').value.trim() || 'TANPA-NAMA') + '-' + tgl + '.pdf');
+  });
+  $('btnDownloadPNG').addEventListener('click', () => {
+    const tgl = ($('tanggal').value || new Date().toISOString().slice(0,10)).replace(/-/g,'');
+    downloadPNG($('formPrintable'), 'FORM-BPOM-' + sanitizeFilename($('brand').value.trim() || $('nama').value.trim() || 'TANPA-NAMA') + '-' + tgl);
   });
   $('btnAromaDownloadPDF').addEventListener('click', () => {
     const tgl = ($('aromaTanggal').value || new Date().toISOString().slice(0,10)).replace(/-/g,'');
     downloadPDF($('aromaPrintable'), 'SAMPLE-AROMA-' + sanitizeFilename($('aromaNama').value.trim() || 'TANPA-NAMA') + '-' + tgl + '.pdf');
   });
+  $('btnAromaDownloadPNG').addEventListener('click', () => {
+    const tgl = ($('aromaTanggal').value || new Date().toISOString().slice(0,10)).replace(/-/g,'');
+    downloadPNG($('aromaPrintable'), 'SAMPLE-AROMA-' + sanitizeFilename($('aromaNama').value.trim() || 'TANPA-NAMA') + '-' + tgl);
+  });
   $('btnMobilePDF').addEventListener('click', () => { if (currentTab === 'aroma') $('btnAromaDownloadPDF').click(); else $('btnDownloadPDF').click(); });
+  $('btnMobilePNG').addEventListener('click', () => { if (currentTab === 'aroma') $('btnAromaDownloadPNG').click(); else $('btnDownloadPNG').click(); });
   $('btnMobileSubmit').addEventListener('click', () => { if (currentTab === 'aroma') $('aromaForm').requestSubmit(); else $('form').requestSubmit(); });
   $('btnMobileCancelEdit').addEventListener('click', () => { if (currentTab === 'aroma'){ resetAromaForm(); toast('Dibatalkan.','info'); } else { resetForm(); toast('Dibatalkan.','info'); } });
+
   $('btnDownloadDetailPDF').addEventListener('click', () => {
     if (!currentDetailItem){ toast('Data tidak ada.','error'); return; }
     const isA = currentDetailItem._type === 'sample_aroma';
     const nama = currentDetailItem.customer?.nama || 'TANPA-NAMA';
     const tgl = (currentDetailItem.tanggal || currentDetailItem.customer?.tanggal || '').replace(/-/g,'');
     downloadPDF($('detailBody'), (isA ? 'SAMPLE-AROMA-' : 'FORM-BPOM-') + sanitizeFilename(nama) + '-' + (tgl || Date.now()) + '.pdf');
+  });
+  $('btnDownloadDetailPNG').addEventListener('click', () => {
+    if (!currentDetailItem){ toast('Data tidak ada.','error'); return; }
+    const isA = currentDetailItem._type === 'sample_aroma';
+    const nama = currentDetailItem.customer?.nama || 'TANPA-NAMA';
+    const tgl = (currentDetailItem.tanggal || currentDetailItem.customer?.tanggal || '').replace(/-/g,'');
+    downloadPNG($('detailBody'), (isA ? 'SAMPLE-AROMA-' : 'FORM-BPOM-') + sanitizeFilename(nama) + '-' + (tgl || Date.now()));
   });
 
   /* ============ DETAIL ============ */
@@ -1488,11 +1693,11 @@
   $('form').addEventListener('submit', e => {
     e.preventDefault();
     const v = id => $(id).value.trim();
-    if (!v('nama')){ toast('Nama wajib.','error'); $('nama').focus(); return; }
-    if (!v('brand')){ toast('Brand wajib.','error'); $('brand').focus(); return; }
+    if (!v('nama')){ toast('Nama wajib.','error'); expandCardOf($('nama')); $('nama').focus(); return; }
+    if (!v('brand')){ toast('Brand wajib.','error'); expandCardOf($('brand')); $('brand').focus(); return; }
     const varian = readVarian();
     if (!varian.length){ toast('Minimal 1 varian.','error'); return; }
-    if (!v('picNama')){ toast('PIC wajib.','error'); $('picNama').focus(); return; }
+    if (!v('picNama')){ toast('PIC wajib.','error'); expandCardOf($('picNama')); $('picNama').focus(); return; }
     const data = {
       customer: { nama: v('nama'), perusahaan: v('perusahaan'), brand: v('brand'), email: v('email')||null, hp: v('hp'), alamat: v('alamat'), tanggal: v('tanggal') },
       varian,
@@ -1518,10 +1723,10 @@
   $('aromaForm').addEventListener('submit', e => {
     e.preventDefault();
     const v = id => $(id).value.trim();
-    if (!v('aromaNama')){ toast('Nama wajib.','error'); $('aromaNama').focus(); return; }
+    if (!v('aromaNama')){ toast('Nama wajib.','error'); expandCardOf($('aromaNama')); $('aromaNama').focus(); return; }
     const items = readAromaItems();
     if (!items.length){ toast('Minimal 1 aroma.','error'); return; }
-    if (!v('aromaPengirimNama')){ toast('PIC wajib.','error'); $('aromaPengirimNama').focus(); return; }
+    if (!v('aromaPengirimNama')){ toast('PIC wajib.','error'); expandCardOf($('aromaPengirimNama')); $('aromaPengirimNama').focus(); return; }
     const data = {
       tanggal: v('aromaTanggal'),
       customer: { nama: v('aromaNama'), perusahaan: v('aromaPerusahaan'), alamat: v('aromaAlamat'), wa: v('aromaWa') },
@@ -1546,99 +1751,90 @@
     }
   });
 
-  /* ============ BACKUP / RESTORE LOKAL ============ */
+  /* ============ BACKUP / RESTORE ============ */
   $('btnBackup').addEventListener('click', () => {
-    const backup = { version: 4, exportedAt: new Date().toISOString(), app: 'Scentia', logo: localStorage.getItem(KEY_LOGO)||null, showKop: loadShowKop(), masterPic: loadPIC(), customerDb: loadCustomerDB(), history: loadHistory(), aromaHistory: loadAromaHistory() };
-    const blob = new Blob([JSON.stringify(backup, null, 2)], { type:'application/json' });
+    const data = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      customers: loadCustomerDB(),
+      pic: loadPIC(),
+      bpom: loadHistory(),
+      aroma: loadAromaHistory(),
+      logo: localStorage.getItem(KEY_LOGO) || null,
+      showKop: loadShowKop()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'scentia-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'scentia-backup-' + new Date().toISOString().slice(0,10) + '.json';
     a.click(); URL.revokeObjectURL(url);
     toast('Backup diunduh.','success');
   });
+
   $('fileRestore').addEventListener('change', e => {
     const file = e.target.files[0]; if (!file) return;
     const r = new FileReader();
     r.onload = ev => {
       try {
         const data = JSON.parse(ev.target.result);
-        if (!data || typeof data !== 'object') throw new Error('Format invalid');
-        if (!confirm('Restore akan menimpa data lokal & sync ke Supabase. Lanjutkan?')){ e.target.value=''; return; }
-        if (data.history && Array.isArray(data.history)) saveHistory(data.history);
-        if (data.aromaHistory && Array.isArray(data.aromaHistory)) saveAromaHistory(data.aromaHistory);
-        if (data.masterPic && Array.isArray(data.masterPic)) localStorage.setItem(KEY_PIC, JSON.stringify(data.masterPic));
-        if (data.customerDb && Array.isArray(data.customerDb)) saveCustomerDB(data.customerDb);
-        if (data.logo){ saveLogo(data.logo); } else { localStorage.removeItem(KEY_LOGO); }
-        if (data.showKop !== undefined) saveShowKop(!!data.showKop);
-        queueSync({ type: 'bulk_push' });
-        loadLogo(); renderPICTable(); renderCustomerTable(); populatePICDropdowns(); populateCustomerDropdowns(); renderHistory(); applyShowKop();
-        toast('Restore berhasil, syncing ke Supabase...','success', 4000);
-      } catch(err){ toast('Gagal restore: ' + err.message,'error'); }
+        if (!data || typeof data !== 'object') throw new Error('Invalid file');
+        if (!confirm('Restore akan menimpa data saat ini. Lanjut?')){ e.target.value=''; return; }
+        if (Array.isArray(data.customers)) localStorage.setItem(KEY_CUSTOMER, JSON.stringify(data.customers));
+        if (Array.isArray(data.pic)) localStorage.setItem(KEY_PIC, JSON.stringify(data.pic));
+        if (Array.isArray(data.bpom)) localStorage.setItem(KEY_HISTORY, JSON.stringify(data.bpom));
+        if (Array.isArray(data.aroma)) localStorage.setItem(KEY_AROMA, JSON.stringify(data.aroma));
+        if (data.logo) localStorage.setItem(KEY_LOGO, data.logo);
+        if (typeof data.showKop === 'boolean') saveShowKop(data.showKop);
+        toast('Restore sukses. Reload halaman...','success');
+        setTimeout(() => location.reload(), 1500);
+      } catch(err){ toast('File tidak valid: ' + err.message, 'error'); }
       e.target.value = '';
     };
     r.readAsText(file);
   });
 
-  /* ============ RESET ============ */
-  $('btnResetHistory').addEventListener('click', async () => {
-    if (!confirm('Hapus SEMUA riwayat (lokal + Supabase)? Customer tetap aman.')) return;
-    localStorage.removeItem(KEY_HISTORY); localStorage.removeItem(KEY_AROMA);
-    if (sb){
-      try {
-        await Promise.all([
-          sb.from('bpom_documents').delete().neq('id', '___x___'),
-          sb.from('aroma_documents').delete().neq('id', '___x___')
-        ]);
-      } catch(e){ console.warn(e); }
-    }
-    renderHistory(); toast('Riwayat dihapus.','info');
-  });
-  $('btnResetAll').addEventListener('click', async () => {
-    if (!confirm('Reset SEMUA data (lokal + Supabase)?')) return;
-    [KEY_HISTORY,KEY_AROMA,KEY_PIC,KEY_CUSTOMER,KEY_LOGO,KEY_QUEUE,KEY_SHOW_KOP].forEach(k => localStorage.removeItem(k));
-    if (sb){
-      try {
-        await Promise.all([
-          sb.from('customers').delete().neq('id', '___x___'),
-          sb.from('master_pic').delete().neq('id', '___x___'),
-          sb.from('bpom_documents').delete().neq('id', '___x___'),
-          sb.from('aroma_documents').delete().neq('id', '___x___'),
-          sb.from('app_config').delete().neq('key', '___x___')
-        ]);
-      } catch(e){ console.warn(e); }
-    }
-    loadLogo(); renderPICTable(); renderCustomerTable(); populatePICDropdowns(); populateCustomerDropdowns(); renderHistory();
-    resetForm(); resetAromaForm(); applyShowKop();
-    toast('Semua data direset.','info');
+  $('btnResetHistory').addEventListener('click', () => {
+    if (!confirm('Hapus SEMUA riwayat BPOM & Aroma?')) return;
+    if (!confirm('Yakin? Tidak bisa dibatalkan.')) return;
+    saveHistory([]); saveAromaHistory([]);
+    renderHistory();
+    queueSync({ type: 'bulk_push' });
+    toast('Riwayat dihapus.','info');
   });
 
-  /* ============ AUTO-FLUSH TRIGGERS ============ */
-  window.addEventListener('online', () => { toast('Online — sync...','info'); flushQueue(); });
-  window.addEventListener('offline', () => { setSyncState('offline', '⚠ Offline — data akan di-sync saat online'); });
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && loadQueue().length) flushQueue(); });
-  setInterval(() => { if (loadQueue().length && !isSyncing) flushQueue(); }, 15000);
+  $('btnResetAll').addEventListener('click', () => {
+    if (!confirm('⚠️ Reset SEMUA data (customer, PIC, riwayat, logo)?')) return;
+    if (!confirm('Yakin? Semua data akan hilang.')) return;
+    [KEY_HISTORY, KEY_AROMA, KEY_PIC, KEY_CUSTOMER, KEY_LOGO, KEY_QUEUE, KEY_SHOW_KOP].forEach(k => localStorage.removeItem(k));
+    toast('Semua data direset. Reload...','info');
+    setTimeout(() => location.reload(), 1500);
+  });
 
   /* ============ INIT ============ */
-  async function init(){
-    await initialPull();
-
-    loadLogo(); renderPICTable(); renderCustomerTable();
-    populatePICDropdowns(); populateCustomerDropdowns();
-    applyShowKop(); // BARU
-
-    addRow(); addRow(); addRow();
+  function initialize(){
+    loadLogo();
+    applyShowKop();
+    populatePICDropdowns();
+    populateCustomerDropdowns();
     $('tanggal').value = new Date().toISOString().slice(0,10);
-    syncTtdPIC(); syncTtdTanggal();
-
-    addAromaRow(); addAromaRow(); addAromaRow();
     $('aromaTanggal').value = new Date().toISOString().slice(0,10);
-    syncAromaTtdPIC(); syncAromaTtdTanggal();
-
-    setTimeout(() => { resizeCanvas(); resizeAromaCanvas(); }, 50);
+    addRow(); addRow(); addRow();
+    addAromaRow(); addAromaRow(); addAromaRow();
+    syncTtdTanggal(); syncAromaTtdTanggal();
+    initFormCards();
+    initChipBars();
     renderHistory();
-
-    if (loadQueue().length) flushQueue();
+    setTimeout(() => { resizeCanvas(); resizeAromaCanvas(); }, 200);
+    initialPull();
   }
-  init();
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initialize);
+  } else {
+    initialize();
+  }
+
 })();
 </script>
 </body>
